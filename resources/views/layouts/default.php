@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>halla – Premium Scandinavian Living</title>
+
+    <!--
+    Hier definieren wir eine HTML Base Url. Diese dient dazu, dass alle relativen URLs und includes im HTML relativ zu
+    dieser URL berechnet werden.
+
+    s. https://developer.mozilla.org/de/docs/Web/HTML/Element/base
+    -->
+    <base href="<?php echo \Core\Config::get('app.baseurl') ?>">
+
+<body>
+<?php require_once __DIR__ . '/../partials/navbar.php'; ?>
+
+<div>
+    <?php require_once $viewPath; ?>
+</div>
+<script src="dist/bundle.js"></script></head>
+</body>
+</html>
