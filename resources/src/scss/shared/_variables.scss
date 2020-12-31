@@ -1,0 +1,57 @@
+// Breakpoints
+$breakpoints: (
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px
+);
+
+// Farben
+
+$colors-light: (
+        primary: #009949,
+        text: #434343,
+        light-grey: #dfdfdf,
+        background: #F8F8F8,
+        white: #fff,
+        error: #e63946
+);
+
+$colors-dark: (
+        primary: #009949,
+        text: rgba(#fff, 0.87),
+        light-grey: #dfdfdf,
+        background: #1b1c22,
+        header: #25262c,
+        white: #fff,
+        error: #e63946
+);
+
+$margin-sizes: (
+        1: .5rem,
+        2: .75rem,
+        3: 1rem,
+        4: 1.5rem
+);
+
+$margin-directions: (
+        t: top,
+        b: bottom,
+        l: left,
+        r: right,
+        x: null,
+        y: null
+);
+
+// Container-Abstände links und rechts
+$container-margin: (
+        small: 1rem,
+        big: 3.125rem
+);
+
+$container-max-width: 113.75rem;
+
+$nav-height: (
+        small: 3rem,
+        big: 4rem
+);

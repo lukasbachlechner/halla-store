@@ -3,6 +3,7 @@
 namespace Core\Models;
 
 use Core\Database;
+use Core\Router;
 use Core\Session;
 
 /**
@@ -122,8 +123,7 @@ abstract class BaseUser extends BaseModel
          * Wurde eine Redirect-URL übergeben, leiten wir hier weiter.
          */
         if (!empty($redirect)) {
-            header("Location: $redirect");
-            exit;
+            Router::redirectTo($redirect);
         }
 
         return true;

@@ -1,0 +1,27 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.header {
+  &__wrapper {
+    height: map.get($nav-height, small);
+    color: map.get($colors-light, text);
+    background: map.get($colors-light, white);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding: 0 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include media-up(sm) {
+      height: map.get($nav-height, big);
+    }
+
+    @include dark-mode {
+      background: map.get($colors-dark, header);
+    }
+  }
+}

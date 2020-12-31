@@ -3,9 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Product;
-use Core\Database;
 use Core\View;
-
 /**
  * Class HomeController
  *
@@ -16,15 +14,10 @@ class HomeController
 
     public function show ()
     {
-        /**
-         * Alle Produkte über das Product-Model aus der Datenbank laden.
-         */
 
-        /**
-         * Um nicht in jeder Action den Header und den Footer und dann den View laden zu müssen, haben wir uns eine View
-         * Klasse gebaut.
-         */
+        $products = Product::all('datetime_added', 'DESC');
         View::render('home', [
+            'products' => $products
         ]);
     }
 

@@ -1,0 +1,26 @@
+@use '../../shared/variables' as *;
+@use 'sass:map';
+
+// Margins
+
+.m {
+  @each $name, $size in $margin-sizes {
+    &--#{$name} {
+      margin: $size;
+    }
+
+    @each $direction, $value in $margin-directions {
+      &#{$direction}--#{$name} {
+        @if $direction == x {
+          margin-left: $size;
+          margin-right: $size;
+        } @else if $direction == y {
+          margin-top: $size;
+          margin-bottom: $size;
+        } @else {
+          margin-#{$value}: $size;
+        }
+      }
+    }
+  }
+}

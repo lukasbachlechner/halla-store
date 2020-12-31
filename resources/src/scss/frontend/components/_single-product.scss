@@ -1,0 +1,57 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.single-product {
+  &__wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+
+    @include media-up(md) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  &__images {
+    @include media-up(md) {
+      grid-column: span 3;
+    }
+
+    @include media-up(xl) {
+      grid-column: span 4;
+    }
+  }
+
+  &__contents {
+    @include media-up(md) {
+      grid-column: span 3;
+    }
+
+    @include media-up(xl) {
+      grid-column: span 2;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &__price,
+  &__name{
+    @include fluid-type(24, 32);
+    margin-bottom: 0;
+  }
+
+  &__quantity {
+    width: 5rem;
+  }
+
+  &__form {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

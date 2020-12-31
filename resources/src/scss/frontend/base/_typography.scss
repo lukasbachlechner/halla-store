@@ -1,0 +1,42 @@
+@use '../../shared/mixins' as *;
+@use '../../shared/variables' as *;
+@use 'sass:map';
+
+body {
+  font-family: Poppins, sans-serif;
+  color: map.get($colors-light, text);
+  @include fluid-type(16, 20);
+}
+
+.font--title {
+  @include fluid-type(48, 96);
+}
+
+.font--normal {
+  font-weight: normal;
+}
+
+.font--bold {
+  font-weight: bold;
+}
+
+h1 {
+  @include fluid-type(32, 48);
+  margin-bottom: 3rem;
+}
+
+h2, .font--2rem {
+  @include fluid-type(24, 32);
+  margin-bottom: 2rem;
+}
+
+p, a, span, .font--paragraph {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.font--bold {
+  font-weight: bold;
+}
+
+

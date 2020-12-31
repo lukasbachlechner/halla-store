@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>halla – Premium Scandinavian Living</title>
 
@@ -13,13 +14,18 @@
     s. https://developer.mozilla.org/de/docs/Web/HTML/Element/base
     -->
     <base href="<?php echo \Core\Config::get('app.baseurl') ?>">
+</head>
 
 <body>
-<?php require_once __DIR__ . '/../partials/navbar.php'; ?>
+<?php \Core\View::renderPartial('navbar'); ?>
 
-<div>
+
+<main class="container">
     <?php require_once $viewPath; ?>
-</div>
-<script src="dist/bundle.js"></script></head>
+</main>
+
+<?php \Core\View::renderPartial('footer'); ?>
+
+<script src="dist/frontend.bundle.js"></script>
 </body>
 </html>

@@ -1,0 +1,41 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.nav {
+  position: fixed;
+  top: map.get($nav-height, big);
+  left: 0;
+  bottom: 0;
+  width: 22rem;
+  padding: 1rem 0;
+  background: map.get($colors-light, white);
+
+  @include dark-mode {
+    background: map.get($colors-dark, header);
+  }
+
+  &__item {
+    &:hover, &--active {
+      background: map.get($colors-light, background);
+
+      @include dark-mode {
+        background: map.get($colors-dark, background);
+      }
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 1rem 2rem;
+    text-decoration: none;
+  }
+}
+
+.main__content {
+  margin-left: 22rem;
+  padding: 2rem;
+}

@@ -1,0 +1,37 @@
+@use "../../shared/variables" as *;
+@use "../../shared/mixins" as *;
+@use "sass:map";
+
+.container {
+  width: calc(100% - 2 * #{map.get($container-margin, small)});
+  max-width: $container-max-width;
+  margin: 0 auto;
+
+  @include media-up(md) {
+    width: calc(100% - 2 * #{map.get($container-margin, big)});
+  }
+}
+
+.section {
+  margin-top: 2rem;
+
+  & + & {
+    margin-top: 4rem;
+  }
+
+  &:last-of-type {
+    margin-bottom: 4rem;
+  }
+
+  @include media-up(md) {
+    margin-top: 3rem;
+
+    & + & {
+      margin-top: 6rem;
+    }
+
+    &:last-of-type {
+      margin-bottom: 6rem;
+    }
+  }
+}

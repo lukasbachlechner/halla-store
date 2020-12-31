@@ -23,7 +23,7 @@ class Router
     /**
      * Routen automatisiert laden
      */
-    public function __construct ()
+    public function __construct()
     {
         $this->loadRoutes();
     }
@@ -34,7 +34,7 @@ class Router
      * Nachdem routes/web.php und roues/api.php beide einfach nur ein Array returnen, wird dieser Wert als Return-Wert
      * für das require_once verwendet und kann somit direkt in Variablen gespeichert werden.
      */
-    public function loadRoutes ()
+    public function loadRoutes()
     {
         $webRoutes = require_once __DIR__ . '/../routes/web.php';
         $apiRoutes = require_once __DIR__ . '/../routes/api.php';
@@ -62,7 +62,7 @@ class Router
      * $_GET['path'], die im .htaccess File definiert ist, verarbeiten und die richtige Controller/Action Kombination
      * aus den routes/*.php files suchen
      */
-    public function route ()
+    public function route()
     {
         /**
          * $_GET['path'] so umformen, dass immer ein führendes Slash dran steht und am Ende keines
@@ -171,7 +171,7 @@ class Router
          * aber fürs erste reicht uns mal ein einfaches die().
          */
         if ($controller === '') {
-            View::error404();
+            self::errorPage();
         } else {
 
             /**
@@ -195,7 +195,7 @@ class Router
      *
      * @return string
      */
-    public function prepareRegex (string $route): string
+    public function prepareRegex(string $route): string
     {
         /**
          * Route mit Parameter in Regular Expression umformen:
@@ -231,6 +231,51 @@ class Router
          * Fertige Regular Expression zurückgeben
          */
         return $regex;
+    }
+
+    /**
+     * Baut die aktuelle URL zusammen.
+     * @return string
+     */
+    public static function getCurrentUrl(): string
+    {
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
+        return "$protocol://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    }
+
+    /**
+     * Redirect zu einer bestimmten URL.
+     * @param string $location
+     */
+    public static function redirectTo(string $location)
+    {
+        $location = trim($location, '/');
+        header("Location: " . BASE_URL . "/$location");
+        exit;
+    }
+
+    /**
+     * Redirect zum Referer.
+     */
+    public static function redirectToReferer()
+    {
+
+        $referer = Session::get('referer');
+        header("Location: $referer");
+        exit;
+    }
+
+    public static function errorPage(string $error = '404')
+    {
+        /**
+         * Nur wenn explizit 403 angegeben ist, auf die 403-Seite weiterleiten,
+         * sonst immer 404 anzeigen.
+         */
+        if ($error === '403') {
+            self::redirectTo('403');
+        } else {
+            self::redirectTo('404');
+        }
     }
 
 

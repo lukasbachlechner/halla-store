@@ -1,0 +1,20 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.icon {
+  &__wrapper {
+    & > svg {
+      width: 1.2rem;
+      fill: map.get($colors-light, text);
+
+      @include dark-mode {
+        fill: map.get($colors-dark, text);
+      }
+    }
+
+    & + * {
+      margin-left: .8rem;
+    }
+  }
+}

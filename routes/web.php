@@ -1,6 +1,10 @@
 <?php
 
 use App\Controllers\HomeController;
+use App\Controllers\ProductController;
+use App\Controllers\SiteController;
+use App\Controllers\AuthController;
+use App\Controllers\AdminController;
 
 /**
  * Die Dateien im /routes Ordner beinhalten ein Mapping von einer URL auf eine eindeutige Controller & Action
@@ -9,7 +13,38 @@ use App\Controllers\HomeController;
  */
 return [
     /**
-     * Home Routes
+     * Home-Routes
      */
-    '/' => [HomeController::class, 'show']
+    '/' => [HomeController::class, 'show'],
+
+    /**
+     * User-Routes
+     */
+    '/login' => [AuthController::class, 'loginForm'],
+    '/login/do' => [AuthController::class, 'doLogin'],
+    '/logout/do' => [AuthController::class, 'doLogout'],
+    '/registrieren' => [AuthController::class, 'registerForm'],
+    '/registrieren/do' => [AuthController::class, 'doRegister'],
+
+    /**
+     * Admin-Routes
+     */
+    '/admin/dashboard' => [AdminController::class, 'dashboard'],
+    '/admin/produkte' => [AdminController::class, 'products'],
+
+    /**
+     * Product-Routes
+     */
+    '/produkte/{slug}' => [ProductController::class, 'show'],
+
+    /**
+     * Seiten-Routes
+     */
+    '/impressum' => [SiteController::class, 'impressum'],
+
+    /**
+     * Fehlerseiten-Routes
+     */
+    '/404' => [SiteController::class, 'error404'],
+    '/403' => [SiteController::class, 'error403']
 ];

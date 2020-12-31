@@ -2,6 +2,7 @@
 
 namespace Core;
 
+
 /**
  * Class View
  *
@@ -11,6 +12,11 @@ class View
 {
 
     /**
+     * Konstante für den Pfad zu allen View-Files.
+     */
+    const VIEW_BASE_PATH = __DIR__ . "/../resources/views";
+
+    /**
      * Diese Methode erlaubt es uns innerhalb der Controller der App (s. HomeController), einen View in nur einer
      * einzigen Zeile zu laden und auch Parameter an den View zu übergeben. Die View Parameter dienen dazu, dass Werte,
      * die in den Controllern berechnet wurden, an den View zur Darstellung übergeben werden können.
@@ -18,10 +24,10 @@ class View
      * Aufruf: View::load('ProductSingle', $productValues)
      *
      * @param string $view
-     * @param array  $params
+     * @param array $params
      * @param string $layout
      */
-    public static function render (string $view, array $params = [], string $layout = '')
+    public static function render(string $view, array $params = [], string $layout = '')
     {
         /**
          * Standard-Layout laden, wenn kein $layout angegeben wurde.
@@ -41,7 +47,7 @@ class View
         /**
          * View Base Path vorbereiten, damit ihn später an mehreren Stellen verwenden können.
          */
-        $viewBasePath = __DIR__ . "/../resources/views";
+        $viewBasePath = self::VIEW_BASE_PATH;
 
         /**
          * View Path vorbereiten, damit im Layout file der View geladen werden kann
@@ -55,21 +61,75 @@ class View
     }
 
     /**
-     * Das ist eine einfache Hilfsfunktion die den HTTP Status Code 404 an den Browser schickt und danach abbricht.
+     * @param string $partialName
+     *
+     * Lädt ein Partial (Abstraktion für require_once, sodass nur der Dateiname angegeben werden muss).
      */
-    public static function error404 ()
+    public static function renderPartial(string $partialName)
     {
-        header("HTTP/1.0 404 Not Found");
-        die;
+        $partial = self::VIEW_BASE_PATH . "/partials/$partialName.php";
+        require $partial;
     }
 
     /**
-     * Das ist eine einfache Hilfsfunktion die den HTTP Status Code 403 an den Browser schickt und danach abbricht.
+     * Rendert eine übergebene CSS-Klasse, wenn der angegebene Link mit der aktuellen URL übereinstimmt.
+     *
+     * @param string $link Nur der Link-Teil, ohne BASE_URL
+     * @param string $activeClass
+     * @return void
      */
-    public static function error403 ()
+    public static function renderActiveClass(string $link, string $activeClass)
     {
-        header("HTTP/1.0 403 Forbidden");
-        die;
+        $currentUrl = Router::getCurrentUrl();
+        $urlToCheck = BASE_URL . "/$link";
+
+        if ($currentUrl === $urlToCheck) {
+            echo $activeClass;
+        }
     }
+
+    /**
+     * @param string $name
+     * @param string $labelText
+     * @param string $inputType
+     * @param string $additionalClasses
+     * @param string $describedBy
+     */
+    public static function renderFormGroup(string $name, string $labelText, string $inputType = 'text', string $additionalClasses = '', string $describedBy = '')
+    {
+
+        echo "<div class='form__group $additionalClasses'>";
+
+        $isPassword = $inputType === 'password';
+        $oldValue = !$isPassword ? Session::old("$name") : '';
+        $ariaDescribedBy = '';
+
+        if (strlen($describedBy) > 0) {
+            $ariaDescribedBy = "aria-describedby='$describedBy'";
+        }
+
+        if ($inputType === 'checkbox') {
+            $checkedString = $oldValue === 'on' ? 'checked' : '';
+            echo "<input type='$inputType' name='$name' id='$name' $checkedString />";
+            echo "<label for='$name'>$labelText</label>";
+        } else {
+            echo "<label for='$name'>$labelText</label>";
+            echo "<input type='$inputType' name='$name' id='$name' class='form__input' value='$oldValue' $ariaDescribedBy/>";
+        }
+
+        echo "</div>";
+    }
+
+    /**
+     * @param string $iconName
+     * @return string
+     */
+    public static function getIcon(string $iconName): string
+    {
+
+        $icon = file_get_contents("storage/assets/svg/icons/$iconName.svg");
+        return "<div class='icon__wrapper'>$icon</div>";
+    }
+
 
 }

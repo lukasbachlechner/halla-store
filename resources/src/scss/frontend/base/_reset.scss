@@ -1,0 +1,36 @@
+@use 'resources/src/scss/shared/variables' as *;
+@use 'resources/src/scss/shared/mixins' as *;
+@use 'sass:map';
+
+*, *:before, *:after {
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: map.get($colors-light, background);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+
+  padding-top: map.get($nav-height, small);
+
+  @include media-up(sm) {
+    padding-top: map.get($nav-height, big);
+  }
+}
+
+main {
+  flex-grow: 1;
+}
+
+a {
+  color: map.get($colors-light, text);
+}
+
+ul {
+  list-style: none;
+}

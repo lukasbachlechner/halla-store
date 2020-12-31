@@ -1,0 +1,77 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.footer {
+  background: map.get($colors-light, white);
+  padding: 3rem 0;
+
+  &__container {
+    display: flex;
+    flex-direction: column-reverse;
+
+    @include media-up(sm) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__branding {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    @include media-up(sm) {
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+
+  &__social {
+    &-list {
+      display: flex;
+      margin: 2rem 0;
+    }
+
+    &-item {
+      & + * {
+        margin-left: 2rem;
+
+        @include media-up(sm) {
+          margin-left: 1rem;
+        }
+      }
+    }
+
+    &-link {
+      text-decoration: none;
+      font-size: 1.5rem;
+    }
+  }
+
+  &__links {
+    &-list {
+      text-align: center;
+      margin-bottom: 2rem;
+
+      @include media-up(sm) {
+        margin-bottom: unset;
+        text-align: right;
+      }
+    }
+
+    &-link {
+      text-decoration: none;
+      line-height: 1.5;
+
+      @include link-hover;
+    }
+  }
+
+  &__icon {
+    height: 1.5rem;
+  }
+
+}

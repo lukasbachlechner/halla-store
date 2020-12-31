@@ -1,0 +1,10 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.logo {
+  @include dark-mode {
+    fill: map.get($colors-dark, text);
+  }
+}
+

@@ -8,6 +8,8 @@
  * Routen innerhalb des /routes/api.php Files erhalten das Präfix /api/, damit klar ist, es handelt sich um Routen, die
  * keine Views laden, sondern lediglich Daten zurückgeben oder empfangen.
  */
+
+use App\Controllers\RestController;
+
 return [
-  // '/some/api/route' => [AjaxController::class, 'something']
 ];

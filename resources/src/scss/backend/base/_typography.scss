@@ -1,0 +1,42 @@
+@use '../../shared/mixins' as *;
+@use '../../shared/variables' as *;
+@use 'sass:map';
+
+@font-face {
+  font-family: 'interVariable';
+  src: url("/storage/assets/fonts/Inter.ttf") format('truetype-variations');
+  font-weight: 1 999;
+}
+
+body {
+  font-family: 'interVariable', sans-serif;
+  color: map.get($colors-light, text);
+  @include fluid-type(16, 20);
+}
+
+.font--title {
+  @include fluid-type(48, 96);
+}
+
+.font--normal {
+  font-weight: normal;
+}
+
+.font--bold {
+  font-weight: bold;
+}
+
+h1 {
+  @include fluid-type(20, 24);
+  margin-bottom: 3rem;
+  font-weight: 700;
+}
+
+p, a, span, .font--paragraph {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.font--bold {
+  font-weight: bold;
+}

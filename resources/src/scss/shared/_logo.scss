@@ -1,0 +1,13 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'sass:map';
+
+.logo {
+  width: auto;
+  height: 1rem;
+  fill: map.get($colors-light, text);
+
+  @include media-up(sm) {
+    height: 1.5rem;
+  }
+}

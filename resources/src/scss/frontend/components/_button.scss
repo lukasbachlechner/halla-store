@@ -1,0 +1,40 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+button {
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button.button,
+a.button {
+  display: inline-block;
+  padding: .75rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  text-align: center;
+
+  &--small {
+    padding: .5rem 1rem;
+  }
+
+  &--primary {
+    background: map.get($colors-light, primary);
+    border: 1px solid map.get($colors-light, primary);
+    color: map.get($colors-light, white);
+  }
+
+  &--secondary {
+    border: 1px solid map.get($colors-light, primary);
+    color: map.get($colors-light, primary);
+  }
+
+  &--full-width {
+    display: block;
+    width: 100%;
+  }
+}

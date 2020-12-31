@@ -1,0 +1,45 @@
+@use 'variables' as *;
+@use 'sass:map';
+
+@mixin fluid-type($minFontSize, $maxFontSize) {
+  $minViewportWidth: 320;
+  $maxViewportWidth: 1920;
+  font-size: calc(
+          #{$minFontSize}px + (#{$maxFontSize} - #{$minFontSize}) *
+          ((100vw - #{$minViewportWidth}px) / (#{$maxViewportWidth} - #{$minViewportWidth})));
+
+  @media (max-width: #{$minViewportWidth}px) {
+    font-size: #{$minFontSize}px;
+  }
+
+  @media (min-width: #{$maxViewportWidth}px) {
+    font-size: #{$maxFontSize}px;
+  }
+}
+
+@mixin media-up($name) {
+  $min: map.get($breakpoints, $name);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}
+
+@mixin dark-mode {
+  html.dark-mode & {
+    @content
+  }
+}
+
+@mixin link-hover {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@mixin box-shadow {
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.24);
+}

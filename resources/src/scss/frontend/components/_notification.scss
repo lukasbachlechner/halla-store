@@ -1,0 +1,15 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.notification {
+  &__wrapper {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &--error {
+    background: map.get($colors-light, error);
+    color: map.get($colors-light, white);
+  }
+}

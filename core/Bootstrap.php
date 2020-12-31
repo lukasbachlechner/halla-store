@@ -28,7 +28,6 @@ class Bootstrap
         error_reporting(E_ALL);
 
 
-
         /**
          * Wurde ein Formular abgeschickt, so speichern wir die Werte aus dem Formular hier in die Session, damit wir
          * mit der Session::old() Methode auf die zuvor eingegeben Werte zugreifen können. In der BaseModel::save()
@@ -69,8 +68,8 @@ class Bootstrap
             /**
              * Angefragte URL zusammenbauen. S. https://stackoverflow.com/a/6768831
              */
-            $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
-            $currentUrl = "$protocol://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+            $currentUrl = Router::getCurrentUrl();
 
             /**
              * Referrer in Session speichern
