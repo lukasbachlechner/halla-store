@@ -8,7 +8,7 @@ $links = [
 ];
 ?>
 
-<nav class="nav">
+<nav class="nav nav--collapsed">
     <ul class="nav__list">
         <?php foreach($links as $link): ?>
             <li class="nav__item <?php \Core\View::renderActiveClass("admin/${link['link']}", 'nav__item--active'); ?>">

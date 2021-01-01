@@ -15,4 +15,15 @@ class ProductController
             'product' => $product
         ]);
     }
+
+    public function showAll() {
+        $products = Product::all();
+        View::render('admin/products', [
+            'products' => $products
+        ], 'admin');
+    }
+
+    public function createForm() {
+        View::render('admin/product-add', [], 'admin');
+    }
 }

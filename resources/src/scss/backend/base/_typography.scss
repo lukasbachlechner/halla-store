@@ -11,11 +11,7 @@
 body {
   font-family: 'interVariable', sans-serif;
   color: map.get($colors-light, text);
-  @include fluid-type(16, 20);
-}
-
-.font--title {
-  @include fluid-type(48, 96);
+  font-size: 1rem;
 }
 
 .font--normal {
@@ -28,7 +24,6 @@ body {
 
 h1 {
   @include fluid-type(20, 24);
-  margin-bottom: 3rem;
   font-weight: 700;
 }
 

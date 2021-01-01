@@ -92,26 +92,39 @@ class View
      * @param string $name
      * @param string $labelText
      * @param string $inputType
-     * @param string $additionalClasses
-     * @param string $describedBy
+     * @param array $additionalOptions
      */
-    public static function renderFormGroup(string $name, string $labelText, string $inputType = 'text', string $additionalClasses = '', string $describedBy = '')
+    public static function renderFormGroup(string $name, string $labelText, string $inputType = 'text', array $additionalOptions = ['class' => '', 'describedBy' => '', 'selectOptions' => []])
     {
 
-        echo "<div class='form__group $additionalClasses'>";
+        $checkboxClass = $inputType === 'checkbox' ? 'form__group--checkbox' : '';
+        $additionalClasses = isset($additionalOptions['class']) ? $additionalOptions['class'] : '';
+        echo "<div class='form__group $checkboxClass $additionalClasses'>";
 
         $isPassword = $inputType === 'password';
         $oldValue = !$isPassword ? Session::old("$name") : '';
         $ariaDescribedBy = '';
 
-        if (strlen($describedBy) > 0) {
-            $ariaDescribedBy = "aria-describedby='$describedBy'";
+        if (isset($additionalOptions['describedBy']) && strlen($additionalOptions['describedBy']) > 0) {
+            $ariaDescribedBy = "aria-describedby='${additionalOptions['describedBy']}'";
         }
 
         if ($inputType === 'checkbox') {
             $checkedString = $oldValue === 'on' ? 'checked' : '';
             echo "<input type='$inputType' name='$name' id='$name' $checkedString />";
             echo "<label for='$name'>$labelText</label>";
+        } elseif ($inputType === 'textarea') {
+            echo "<label for='$name'>$labelText</label>";
+            echo "<textarea rows='6' name='$name' id='$name' class='form__input' $ariaDescribedBy>$oldValue</textarea>";
+        } elseif ($inputType === 'select') {
+            echo "<label for='$name'>$labelText</label>";
+            echo "<select name='$name' id='$name' class='form__input' $ariaDescribedBy>";
+            if(count($additionalOptions['selectOptions'] > 0)) {
+                foreach ($additionalOptions['selectOptions'] as $key => $option) {
+                    echo "<option value='$key'>$option</option>";
+                }
+            }
+            echo "</select>";
         } else {
             echo "<label for='$name'>$labelText</label>";
             echo "<input type='$inputType' name='$name' id='$name' class='form__input' value='$oldValue' $ariaDescribedBy/>";

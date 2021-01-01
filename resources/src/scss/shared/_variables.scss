@@ -13,6 +13,8 @@ $colors-light: (
         text: #434343,
         light-grey: #dfdfdf,
         background: #F8F8F8,
+        background-dark: darken(#f8f8f8, 10%),
+        background-darker: darken(#f8f8f8, 20%),
         white: #fff,
         error: #e63946
 );
@@ -23,8 +25,18 @@ $colors-dark: (
         light-grey: #dfdfdf,
         background: #1b1c22,
         header: #25262c,
+        header-light: lighten(#25262c, 10%),
+        header-lighter: lighten(#25262c, 20%),
         white: #fff,
         error: #e63946
+);
+
+$ui-colors: (
+        primary: #3c40c6,
+        error: #ff3f34,
+        success: #05c46b,
+        warning: #ffa801,
+        info: #34e7e4,
 );
 
 $margin-sizes: (

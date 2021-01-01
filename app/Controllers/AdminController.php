@@ -14,12 +14,4 @@ class AdminController
     {
         View::render('admin/dashboard', [], 'admin');
     }
-
-    public function products()
-    {
-        $products = Product::all();
-        View::render('admin/products', [
-            'products' => $products
-        ], 'admin');
-    }
 }

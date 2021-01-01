@@ -6,7 +6,7 @@
         <?php \Core\View::renderFormGroup('last_name', 'Nachname'); ?>
         <?php \Core\View::renderFormGroup('email', 'E-Mail-Adresse', 'email'); ?>
         <div class="form__row">
-            <?php \Core\View::renderFormGroup('password', 'Passwort', 'password', '', 'passwordDescription'); ?>
+            <?php \Core\View::renderFormGroup('password', 'Passwort', 'password',  ['describedBy' => 'passwordDescription']); ?>
             <?php \Core\View::renderFormGroup('password_repeat', 'Passwort wiederholen', 'password'); ?>
         </div>
 
@@ -15,8 +15,8 @@
         </div>
 
 
-        <?php \Core\View::renderFormGroup('agb', 'Ich habe die AGB und die Datenschutzerklärung gelesesn und akzeptiere sie.', 'checkbox', 'form__group--checkbox'); ?>
-        <?php \Core\View::renderFormGroup('newsletter', 'Ich möchte über aktuelle Angebote auf dem Laufenden gehalten werden.', 'checkbox', 'form__group--checkbox'); ?>
+        <?php \Core\View::renderFormGroup('agb', 'Ich habe die AGB und die Datenschutzerklärung gelesesn und akzeptiere sie.', 'checkbox'); ?>
+        <?php \Core\View::renderFormGroup('newsletter', 'Ich möchte über aktuelle Angebote auf dem Laufenden gehalten werden.', 'checkbox'); ?>
 
 
         <div class="form__group mt--3">

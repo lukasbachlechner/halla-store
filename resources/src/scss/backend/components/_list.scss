@@ -1,0 +1,66 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.list {
+  border-radius: .5rem;
+  background: map.get($colors-light, white);
+  @include dark-mode {
+    background: map.get($colors-dark, header);
+  }
+
+  &__grid {
+    display: grid;
+    align-items: center;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    grid-gap: 1rem;
+    padding: 1rem 2rem;
+
+    &--products {
+      grid-template-columns: 4ch 4rem repeat(4, 1fr);
+    }
+  }
+
+  &__head {
+    padding: 1.5rem 2rem;
+    font-weight: 600;
+    border-bottom: 2px solid map.get($colors-light, background-dark);
+    @include dark-mode {
+      border-bottom: 1px solid map.get($colors-dark, background);
+    }
+  }
+
+  &__body {
+  }
+
+  &__item {
+    border-bottom: 1px solid map.get($colors-light, background-dark);
+    @include dark-mode {
+      border-bottom: 1px solid map.get($colors-dark, background);
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+
+    &:hover {
+      background: map.get($colors-light, background-dark);
+      @include dark-mode {
+        background: map.get($colors-dark, header-light);
+      }
+
+    }
+  }
+
+  &__image-wrapper {
+    width: 4rem;
+    height: 4rem;
+
+    & > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

@@ -3,6 +3,6 @@
         <?php \Core\View::renderPartial('logo'); ?>
     </a>
     <button id="darkModeToggle">
-        DM
+        Dark-Mode ein/aus
     </button>
 </header>

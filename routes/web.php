@@ -29,8 +29,10 @@ return [
     /**
      * Admin-Routes
      */
+    '/admin' => [AdminController::class, 'dashboard'],
     '/admin/dashboard' => [AdminController::class, 'dashboard'],
-    '/admin/produkte' => [AdminController::class, 'products'],
+    '/admin/produkte' => [ProductController::class, 'showAll'],
+    '/admin/produkte/add' => [ProductController::class, 'createForm'],
 
     /**
      * Product-Routes
