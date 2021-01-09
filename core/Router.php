@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use App\Models\User;
+
 /**
  * Class Router
  *
@@ -77,6 +79,15 @@ class Router
          * Wenn kein Pfad übergeben wurde, ist unsere Standarroute "/"
          */
         $path = '/' . rtrim($path, '/');
+
+
+        if (strpos($path, '/admin') === 0) {
+            // it is a admin route, so check if the User is logged in & has sufficient rights
+            // if not, throw 403
+            if (!User::isLoggedIn() || User::getLoggedIn()->permission_level === 1) {
+                Router::errorPage('403');
+            }
+        }
 
         /**
          * Variablen initialisieren, damit wir sie später befüllen können

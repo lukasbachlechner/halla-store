@@ -1,15 +1,16 @@
-@use 'resources/src/scss/shared/variables' as *;
-@use 'resources/src/scss/shared/mixins' as *;
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
 @use 'sass:map';
 
 .notification {
   &__wrapper {
     padding: 1rem;
     margin-bottom: 1.5rem;
+    @include border-radius;
   }
 
   &--error {
-    background: map.get($colors-light, error);
+    background: map.get($ui-colors, error);
     color: map.get($colors-light, white);
   }
 }

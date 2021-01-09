@@ -7,9 +7,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>halla – Admin</title>
     <base href="<?php echo \Core\Config::get('app.baseurl') ?>">
+
+    <style>
+        .loading-screen {
+            z-index: 1000;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #1b1c22;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body>
+<div class="loading-screen"></div>
 <?php \Core\View::renderPartial('admin/header'); ?>
 
 <?php \Core\View::renderPartial('admin/nav'); ?>

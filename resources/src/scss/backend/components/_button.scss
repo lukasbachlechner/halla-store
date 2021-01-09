@@ -7,7 +7,7 @@
   justify-content: space-between;
   align-items: center;
   padding: .75rem 1.25rem;
-  border-radius: 4px;
+  @include border-radius;
   text-decoration: none;
 
   &--primary {

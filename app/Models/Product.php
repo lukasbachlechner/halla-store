@@ -20,12 +20,13 @@ class Product extends BaseModel
     public int $collection_id = 0;
     public string $datetime_added = '';
     public string $datetime_updated = '';
+    public int $is_active = 0;
 
     /**
      * Product constructor.
      * @param array $data
      */
-    public function __construct(array $data)
+    public function __construct(array $data = [])
     {
         if (!empty($data)) {
             $this->fill($data);
@@ -47,6 +48,7 @@ class Product extends BaseModel
         $this->collection_id = (int)$data['collection_id'];
         $this->datetime_added = (string)$data['datetime_added'];
         $this->datetime_updated = (string)$data['datetime_updated'];
+        $this->is_active = (int)$data['is_active'];
     }
 
     public static function findBySlug(string $slug)
@@ -102,17 +104,32 @@ class Product extends BaseModel
 
         if (!empty($id)) {
             /**
-             * Id nicht leer, update ausführen und $result returnen
+             * @todo: update product and return $result
              */
+            $result = $db->query();
         } else {
-            /**
-             * Id leer, Produkt anlegen, $this->id setzen und $result returnen
-             */
+            $result = $db->query("INSERT INTO $tableName SET name = ?, description = ?, price = ?, quantity_available = ?, quantity_sold = ?, slug = ?, is_active = ?", [
+                's:name' => $this->name,
+                's:description' => $this->description,
+                'd:price' => $this->price,
+                'i:quantity_available' => $this->quantity_available,
+                'i:quantity_sold' => $this->quantity_sold,
+                's:slug' => $this->generateSlug(),
+                'i:is_active' => $this->is_active
+            ]);
+
+            $newId = $db->getInsertId();
+
+            if (is_int($newId)) {
+                $this->id = $newId;
+            }
         }
+
+        return $result;
 
     }
 
-    public static function formatPrice(float $price)
+    public static function formatPrice(float $price): string
     {
         $price = number_format($price, 2, ',', '.');
         if(substr($price, -3) === ',00') {
@@ -120,5 +137,14 @@ class Product extends BaseModel
         }
         $price = "€ $price";
         return $price;
+    }
+
+    public static function getActiveBadge(int $activeState): string
+    {
+        if ($activeState === 0) {
+           return "<span class='badge badge--error'>inaktiv</span>";
+        } elseif ($activeState === 1) {
+            return "<span class='badge'>aktiv</span>";
+        }
     }
 }

@@ -4,7 +4,7 @@
 
 .form {
   &__input {
-    border-radius: 4px;
+    @include border-radius;
     border: 1px solid map.get($colors-light, background-darker);
 
     @include dark-mode {
@@ -21,6 +21,12 @@
     &:focus {
       border-color: map.get($ui-colors, primary);
       outline: none;
+    }
+
+    &--price {
+      &::before {
+        content: '€';
+      }
     }
   }
 
@@ -52,6 +58,7 @@
 
   & fieldset {
     padding: 1.3rem;
+    margin-bottom: 2rem;
     border: none;
     border-radius: .5rem;
     background: map.get($colors-light, white);

@@ -1,4 +1,8 @@
 @use "shared/helpers";
+@use "frontend/components/notification";
+@use "shared/logo";
+@use "shared/form";
+
 
 @use "frontend/base/reset";
 @use "frontend/base/typography";
@@ -8,9 +12,6 @@
 
 @use "frontend/components/nav";
 @use "frontend/components/footer";
-@use "shared/logo";
 @use "frontend/components/product";
-@use "shared/form";
 @use "frontend/components/button";
 @use "frontend/components/single-product";
-@use "frontend/components/notification";

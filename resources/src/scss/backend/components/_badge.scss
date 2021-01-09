@@ -1,0 +1,27 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.badge {
+  position: relative;
+  padding-left: 1rem;
+
+  &::before {
+    content: '';
+    display: block;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: map.get($ui-colors, success);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &--error {
+    &::before {
+      background: map.get($ui-colors, error);
+    }
+  }
+}

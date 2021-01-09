@@ -33,6 +33,7 @@ return [
     '/admin/dashboard' => [AdminController::class, 'dashboard'],
     '/admin/produkte' => [ProductController::class, 'showAll'],
     '/admin/produkte/add' => [ProductController::class, 'createForm'],
+    '/admin/produkte/add/do' => [ProductController::class, 'doCreate'],
 
     /**
      * Product-Routes

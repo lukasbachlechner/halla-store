@@ -32,7 +32,9 @@ class AuthController
                 $remember = true;
             }
 
-            $user->login('/', $remember);
+            $requestedPath = Session::getAndForget('requestedPath403', '');
+            $redirectTo = !empty($requestedPath) ? $requestedPath : '/';
+            $user->login($redirectTo, $remember);
         } else {
             /**
              * @todo: save errror
@@ -44,7 +46,7 @@ class AuthController
 
     public function doLogout()
     {
-        User::logout();
+        User::logout('/');
     }
 
 
@@ -84,7 +86,6 @@ class AuthController
             array_unshift($errors, "Ein Konto mit der E-Mail-Adresse \"$email\" existiert bereits.");
         }
 
-        var_dump($errors);
         if (!empty($errors)) {
             Session::set('errors', $errors);
             Router::redirectTo('registrieren');
