@@ -1,0 +1,54 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.drop-zone {
+  @include border-radius;
+  border: 2px dotted map.get($colors-light, background-darker);
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+
+  @include dark-mode {
+    background: map.get($colors-dark, header);
+    border-color: map.get($colors-dark, header-lighter);
+    color: map.get($colors-dark, text);
+  }
+
+  &--over {
+    border-color: map.get($ui-colors, primary);
+    border-style: solid;
+    cursor: copy;
+    background: map.get($colors-light, background-dark);
+
+    @include dark-mode {
+      background: map.get($colors-dark, header-light);
+    }
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__thumbs-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1rem;
+    margin-top: 1rem;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__thumbs-item {
+    width: 100%;
+    height: 10rem;
+  }
+
+  &__thumbs-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

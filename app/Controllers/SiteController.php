@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use Core\Session;
 use Core\View;
 
 /**
@@ -19,6 +20,10 @@ class SiteController
     }
 
     public function error403() {
+        // get requested resource from referer
+        $requestedPath = str_replace(BASE_URL . "/",  '', Session::get('referer'));
+        // set to session to come back after the login
+        Session::set('requestedPath403', $requestedPath);
         View::render('403');
     }
 }

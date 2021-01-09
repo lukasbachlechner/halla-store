@@ -1,5 +1,5 @@
 <div class="page__header">
-    <h1>Alle Produkte</h1>
+    <h1>Alle Produkte (<?php echo count($products); ?>)</h1>
 
     <a class="button button--primary button--with-icon" href="admin/produkte/add"><?php echo \Core\View::getIcon('plus') ?>Neues Produkt</a>
 </div>
@@ -22,7 +22,7 @@
                     <div><?php echo $product->name; ?></div>
                     <div><?php echo \App\Models\Product::formatPrice($product->price); ?></div>
                     <div><?php echo $product->quantity_available; ?></div>
-                    <div><?php echo 'active'; ?></div>
+                    <div><?php echo \App\Models\Product::getActiveBadge($product->is_active); ?></div>
                 </a>
             </li>
         <?php endforeach; ?>
