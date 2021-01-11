@@ -8,7 +8,7 @@ $links = [
 ];
 ?>
 
-<nav class="nav nav--collapsed">
+<nav class="nav">
     <ul class="nav__list">
         <?php foreach($links as $link): ?>
             <li class="nav__item <?php \Core\View::renderActiveClass("admin/${link['link']}", 'nav__item--active'); ?>">
@@ -18,4 +18,8 @@ $links = [
             </li>
         <?php endforeach; ?>
     </ul>
+
+    <div class="nav__bottom">
+        <button class="nav__trigger"><?php echo \Core\View::getIcon('arrow-back') ?></button>
+    </div>
 </nav>

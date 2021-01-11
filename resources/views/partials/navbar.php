@@ -24,19 +24,43 @@
 
             <ul class="nav__list nav__secondary-list">
                 <li class="nav__item">
-                    <a class="nav__link" href="#">
+                    <a class="nav__link" href="wunschliste">
                         <div class="nav__icon-wrapper">
-                            <img class="nav__icon" src="storage/assets/svg/icons/cart.svg" alt="">
-                            <span class="nav__icon-badge">4</span>
+                            <?php echo \Core\View::getIcon('heart'); ?>
+                            <?php \App\Controllers\WishlistController::displayWishlistBadge(); ?>
+                        </div>
+                        <span class="sr-only">Wunschliste</span>
+                    </a>
+                </li>
+
+                <li class="nav__item">
+                    <a class="nav__link" href="warenkorb">
+                        <div class="nav__icon-wrapper">
+                            <?php echo \Core\View::getIcon('cart'); ?>
+                            <?php \App\Controllers\CartController::displayCartBadge(); ?>
                         </div>
                         <span class="sr-only">Warenkorb</span>
                     </a>
                 </li>
 
                 <li class="nav__item">
-                    <a class="nav__link" href="<?php echo \App\Models\User::isLoggedIn() ? 'profil' : 'login'; ?>">
+                    <?php
+                        $profileLink = 'login';
+                        if(\App\Models\User::isLoggedIn()) {
+                            $loggedInUser = \App\Models\User::getLoggedIn();
+                            $permissionLevel =  $loggedInUser->permission_level;
+
+                            if($permissionLevel !== \App\Models\User::USER_NORMAL) {
+                                $profileLink = 'admin';
+                            } else {
+                                $profileLink = 'profil';
+                            }
+                        }
+
+                    ?>
+                    <a class="nav__link" href="<?php echo $profileLink; ?>">
                         <div class="nav__icon-wrapper">
-                            <img class="nav__icon" src="storage/assets/svg/icons/user.svg" alt="">
+                            <?php echo \Core\View::getIcon('user'); ?>
                         </div>
                         <span class="sr-only">Mein Profil</span>
                     </a>
@@ -46,7 +70,7 @@
                 <li class="nav__item nav__menu-trigger">
                     <button class="nav__link" id="menuTrigger">
                         <div class="nav__icon-wrapper">
-                            <img class="nav__icon" src="storage/assets/svg/icons/menu.svg" alt="">
+                            <?php echo \Core\View::getIcon('menu'); ?>
                         </div>
                         <span class="sr-only">Menü</span>
                     </button>

@@ -120,6 +120,11 @@
       display: flex;
       align-items: center;
       position: relative;
+
+      & .icon__wrapper > svg {
+        height: 1.5rem;
+        width: auto;
+      }
     }
 
     &-badge {

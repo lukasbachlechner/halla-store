@@ -6,7 +6,7 @@
 
 @use "frontend/base/reset";
 @use "frontend/base/typography";
-@use "frontend/base/utilities";
+@use "shared/utilities";
 
 @use "frontend/layout/grid";
 
@@ -15,3 +15,5 @@
 @use "frontend/components/product";
 @use "frontend/components/button";
 @use "frontend/components/single-product";
+@use "frontend/components/icon";
+@use "frontend/components/cart";

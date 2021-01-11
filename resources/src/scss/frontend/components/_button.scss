@@ -11,12 +11,22 @@ button {
 
 button.button,
 a.button {
-  display: inline-block;
+  display: inline-flex;
   padding: .75rem 1.25rem;
   font-size: 1rem;
   line-height: 1;
   text-decoration: none;
   text-align: center;
+  align-items: center;
+  justify-content: center;
+
+  & > .icon__wrapper + span {
+    margin-left: .8rem;
+  }
+
+  & > span + .icon__wrapper {
+    margin-left: .8rem;
+  }
 
   &--small {
     padding: .5rem 1rem;
@@ -26,11 +36,19 @@ a.button {
     background: map.get($colors-light, primary);
     border: 1px solid map.get($colors-light, primary);
     color: map.get($colors-light, white);
+
+    & svg {
+      fill: map.get($colors-light, white);
+    }
   }
 
   &--secondary {
     border: 1px solid map.get($colors-light, primary);
     color: map.get($colors-light, primary);
+
+    & svg {
+      fill: map.get($colors-light, primary);
+    }
   }
 
   &--full-width {

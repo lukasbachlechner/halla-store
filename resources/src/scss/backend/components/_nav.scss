@@ -4,32 +4,94 @@
 
 .nav {
   position: fixed;
-  top: map.get($nav-height, big);
   left: 0;
   bottom: 0;
-  width: 22rem;
-  padding: 1rem 0;
-  padding-top: 0;
+  width: 100vw;
+  padding: 0 0 1rem;
   background: map.get($colors-light, white);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10;
 
   @include dark-mode {
     background: map.get($colors-dark, header);
   }
 
-  &--collapsed {
-    width: 3rem;
+  @include media-up(md) {
+    top: map.get($nav-height, big);
+    left: 0;
+    bottom: 0;
+    width: 22rem;
+    padding: 1rem 0;
+    padding-top: 0;
+    background: map.get($colors-light, white);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
-    & + .main__content {
-      margin-left: 3rem;
-      padding: 2rem 4rem;
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    @include media-up(md) {
+      display: block;
+    }
+  }
+
+  &__item {
+    flex-grow: 1;
+
+  }
+
+  &__link {
+    display: flex;
+    justify-content: center;
+
+    & span {
+      display: none;
     }
 
-    & .nav__link {
-      justify-content: center;
+    @include media-up(md) {
+      justify-content: flex-start;
       & span {
-        display: none;
+        display: inline;
       }
     }
+  }
+
+  &--collapsed {
+    @include media-up(md) {
+      width: 3rem;
+
+      & + .main__content {
+        margin-left: 3rem;
+        padding: 2rem 4rem;
+      }
+
+      & .nav__link {
+        justify-content: center;
+
+        & span {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &__bottom {
+    display: none;
+
+    @include media-up(md) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__trigger {
+    padding: 1rem;
+    align-self: end;
   }
 
   &__item {
@@ -53,6 +115,9 @@
 }
 
 .main__content {
-  margin-left: 22rem;
   padding: 2rem;
+  margin-bottom: 5rem;
+  @include media-up(md) {
+    margin-left: 22rem;
+  }
 }

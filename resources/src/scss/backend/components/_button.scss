@@ -20,6 +20,25 @@
     color: map.get($colors-light, white);
   }
 
+  &--error {
+    background: map.get($ui-colors, error);
+    color: map.get($colors-light, white);
+  }
+
+  &__group {
+    display: flex;
+    align-items: center;
+
+    & .button + .button {
+      margin-left: 1rem;
+    }
+  }
+
+  &--full-width {
+    width: 100%;
+    justify-content: center;
+  }
+
 
 
   &--with-icon {

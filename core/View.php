@@ -65,8 +65,12 @@ class View
      *
      * Lädt ein Partial (Abstraktion für require_once, sodass nur der Dateiname angegeben werden muss).
      */
-    public static function renderPartial(string $partialName)
+    public static function renderPartial(string $partialName, array $variables = [])
     {
+        if(!empty($variables)) {
+            extract($variables);
+        }
+
         $partial = self::VIEW_BASE_PATH . "/partials/$partialName.php";
         require $partial;
     }

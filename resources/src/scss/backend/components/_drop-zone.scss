@@ -8,6 +8,7 @@
   width: 100%;
   padding: 2rem;
   text-align: center;
+  position: relative;
 
   @include dark-mode {
     background: map.get($colors-dark, header);
@@ -26,13 +27,22 @@
     }
   }
 
+  &__header {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
   &__input {
     display: none;
   }
 
   &__thumbs-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    @include media-up(md) {
+      grid-template-columns: repeat(4, 1fr);
+    }
     grid-gap: 1rem;
     margin-top: 1rem;
 
@@ -44,6 +54,29 @@
   &__thumbs-item {
     width: 100%;
     height: 10rem;
+    position: relative;
+    cursor: pointer;
+
+    &:hover::before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2rem;
+      z-index: 20;
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cg data-name='Layer 2'%3E%3Cg data-name='trash-2'%3E%3Crect width='24' height='24' opacity='0'/%3E%3Cpath d='M21 6h-5V4.33A2.42 2.42 0 0 0 13.5 2h-3A2.42 2.42 0 0 0 8 4.33V6H3a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8h1a1 1 0 0 0 0-2zM10 4.33c0-.16.21-.33.5-.33h3c.29 0 .5.17.5.33V6h-4zM18 19a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V8h12z'/%3E%3Cpath d='M9 17a1 1 0 0 0 1-1v-4a1 1 0 0 0-2 0v4a1 1 0 0 0 1 1z'/%3E%3Cpath d='M15 17a1 1 0 0 0 1-1v-4a1 1 0 0 0-2 0v4a1 1 0 0 0 1 1z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    &:hover::after {
+      content: '';
+      z-index: 19;
+      background: rgba(map.get($ui-colors, error), 0.5);
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   }
 
   &__thumbs-img {

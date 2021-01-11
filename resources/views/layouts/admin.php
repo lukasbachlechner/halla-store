@@ -34,6 +34,8 @@
     <?php require_once $viewPath; ?>
 </main>
 
+<?php \Core\View::renderPartial('admin/success'); ?>
+
 
 <script src="dist/backend.bundle.js"></script>
 </body>

@@ -18,7 +18,7 @@
             <li class="list__item">
                 <a href="admin/produkte/edit/<?php echo $product->id; ?>" class="list__link list__grid list__grid--products">
                     <div><?php echo $product->id; ?></div>
-                    <div class="list__image-wrapper"><img src="https://via.placeholder.com/1000x640" alt=""></div>
+                    <div class="list__image-wrapper"><img src="<?php echo $product->getImages()[0]->path; ?>" alt=""></div>
                     <div><?php echo $product->name; ?></div>
                     <div><?php echo \App\Models\Product::formatPrice($product->price); ?></div>
                     <div><?php echo $product->quantity_available; ?></div>

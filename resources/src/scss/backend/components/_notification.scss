@@ -3,6 +3,18 @@
 @use 'sass:map';
 
 .notification {
+  &__container {
+    position: fixed;
+    width: 25vw;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 11;
+  }
   &__wrapper {
     padding: 1rem;
     margin-bottom: 1.5rem;
@@ -12,5 +24,53 @@
   &--error {
     background: map.get($ui-colors, error);
     color: map.get($colors-light, white);
+  }
+
+  &--success {
+    background: map.get($ui-colors, success);
+    color: map.get($colors-light, white);
+    margin-bottom: 0;
+    animation: fadeOut .2s ease-out;
+    animation-fill-mode: forwards;
+    animation-delay: 5s;
+    position: relative;
+
+    &::after, &::before {
+      content: '';
+      position: absolute;
+      display: block;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: darken(map.get($ui-colors, success), 20%);
+      @include border-radius;
+    }
+
+    &::after {
+      animation: fillBar 5s linear;
+      background: white;
+    }
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+  }
+}
+
+@keyframes fillBar {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
   }
 }

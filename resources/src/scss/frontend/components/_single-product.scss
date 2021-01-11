@@ -8,29 +8,71 @@
     grid-template-columns: 1fr;
     grid-gap: 2rem;
 
-    @include media-up(md) {
-      grid-template-columns: repeat(6, 1fr);
+    @include media-up(lg) {
+      grid-template-columns: 2fr 1fr;
     }
   }
 
   &__images {
-    @include media-up(md) {
-      grid-column: span 3;
+    grid-column: span 1;
+
+    &--transition-on {
+      transition: left .2s ease-out;
     }
 
-    @include media-up(xl) {
-      grid-column: span 4;
+  }
+
+  &__images-container {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+  }
+
+  &__images-list {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    position: absolute;
+    left: 0;
+  }
+
+  &__image-controls {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+
+    & .button {
+      padding: 0;
+
+      & svg {
+        width: 2rem;
+      }
+
+      &:last-child {
+        transform: rotate(180deg);
+      }
     }
   }
 
-  &__contents {
-    @include media-up(md) {
-      grid-column: span 3;
-    }
+  &__images-item {
+    flex-grow: 1;
+    width: 100%;
+    background: map.get($colors-light, white);
+  }
 
-    @include media-up(xl) {
-      grid-column: span 2;
-    }
+  &__contents {
+    grid-column: span 1;
+  }
+
+  &__wishlist {
+    flex-basis: 25%;
   }
 
   &__header {
@@ -41,13 +83,22 @@
   }
 
   &__price,
-  &__name{
+  &__name {
     @include fluid-type(24, 32);
     margin-bottom: 0;
   }
 
   &__quantity {
-    width: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & .form__input {
+      width: 5rem;
+    }
+
+    & label {
+      font-size: 1rem;
+    }
   }
 
   &__form {

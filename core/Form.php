@@ -50,7 +50,11 @@ class Form
             echo "<select name='$name' id='$name' class='form__input' $ariaDescribedBy>";
             if (count($additionalOptions['selectOptions']) > 0) {
                 foreach ($additionalOptions['selectOptions'] as $key => $option) {
-                    echo "<option value='$key'>$option</option>";
+                    $checked = '';
+                    if ($oldValue === $key) {
+                        $checked = 'selected';
+                    }
+                    echo "<option value='$key' $checked>$option</option>";
                 }
             }
             echo "</select>";

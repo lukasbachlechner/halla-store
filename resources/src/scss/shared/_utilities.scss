@@ -1,4 +1,4 @@
-@use '../../shared/variables' as *;
+@use 'variables' as *;
 @use 'sass:map';
 
 // Margins
@@ -23,4 +23,12 @@
       }
     }
   }
+}
+
+.text--center {
+  text-align: center;
+}
+
+.text--right {
+  text-align: right;
 }

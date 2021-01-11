@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Core\Config;
 use Core\Database;
 use Core\Models\BaseModel;
 
@@ -51,5 +52,15 @@ class Image extends BaseModel
 
         return $result;
 
+    }
+
+    public function connectToProduct(int $productId)
+    {
+        $db = new Database();
+
+        return $db->query("INSERT INTO images_products SET image_id = ?, product_id = ?", [
+            'i:image_id' => $this->id,
+            'i:product_id' => $productId
+        ]);
     }
 }
