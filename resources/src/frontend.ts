@@ -1,6 +1,6 @@
 import './scss/frontend.scss';
 import Menu from "./js/Menu";
-import ImageSlider from "./js/ImageSlider";
+import ImageGallery from "./js/ImageGallery";
 
 new Menu();
-new ImageSlider('#imageSliderContainer');
+new ImageGallery('#imageGallery');

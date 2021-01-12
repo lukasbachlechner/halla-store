@@ -15,67 +15,54 @@
 
   &__images {
     grid-column: span 1;
-
-    &--transition-on {
-      transition: left .2s ease-out;
-    }
-
   }
 
-  &__images-container {
-    overflow: hidden;
-    padding-bottom: 56.25%;
-    position: relative;
-  }
-
-  &__image {
-    width: 100%;
-    height: 100%;
-
-    object-fit: contain;
-  }
-
-  &__images-list {
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    position: absolute;
-    left: 0;
-  }
-
-  &__image-controls {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: space-between;
-
-    & .button {
-      padding: 0;
-
-      & svg {
-        width: 2rem;
-      }
-
-      &:last-child {
-        transform: rotate(180deg);
-      }
-    }
-  }
-
-  &__images-item {
-    flex-grow: 1;
-    width: 100%;
+  &__description {
     background: map.get($colors-light, white);
+    @include border-radius;
+    @include box-shadow;
+    padding: 2rem;
+
+    @include media-up(lg) {
+      grid-column: 1 / span 1;
+      grid-row: 2 / span 1;
+    }
   }
 
   &__contents {
     grid-column: span 1;
+    grid-row: 2 / 3;
+
+    @include media-up(lg) {
+      grid-row: 1 / 3;
+    }
+
+    &-inner {
+      background: map.get($colors-light, white);
+      @include box-shadow;
+      @include border-radius;
+      padding: 2rem;
+
+      position: sticky;
+      top: calc(#{map.get($nav-height, big)} + 3rem);
+    }
   }
 
   &__wishlist {
-    flex-basis: 25%;
+    padding: 0;
+    top: 4rem;
+    right: 1rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > .icon__wrapper svg {
+      fill: map.get($colors-light, primary);
+    }
   }
 
-  &__header {
+  &__header, &__preheader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -92,6 +79,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     & .form__input {
       width: 5rem;
     }

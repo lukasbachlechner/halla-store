@@ -188,6 +188,10 @@ class Product extends BaseModel
         }
     }
 
+    /**
+     * @param bool $withPlaceholder
+     * @return array
+     */
     public function getImages(bool $withPlaceholder = false): array
     {
         $db = new Database();

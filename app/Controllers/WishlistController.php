@@ -15,7 +15,7 @@ class WishlistController
 
     public function show()
     {
-        $products  = self::getWishlistContent();
+        $products = self::getWishlistContent();
         $allProducts = Product::all();
         $randomProductKeys = array_rand($allProducts, 2);
         $randomProducts = [];
@@ -35,18 +35,19 @@ class WishlistController
     {
 
         $wishlist = Session::get(self::WISHLIST_SESSION_KEY, []);
+        $product = Product::find($productId);
 
-        if(!in_array($productId, $wishlist)) {
+        if (!in_array($productId, $wishlist)) {
             $wishlist[] = $productId;
         }
 
         Session::set(self::WISHLIST_SESSION_KEY, $wishlist);
-        Router::redirectTo('wunschliste');
+        Router::redirectTo("produkte/{$product->slug}");
     }
 
     public function doDelete(int $productId, string $redirect = 'wunschliste')
     {
-        $wishlist = Session::get(self::WISHLIST_SESSION_KEY);
+        $wishlist = Session::get(self::WISHLIST_SESSION_KEY, []);
 
         unset($wishlist[array_search($productId, $wishlist)]);
 
@@ -54,12 +55,18 @@ class WishlistController
         Router::redirectTo($redirect);
     }
 
+    public function doDeleteFromProductPage(int $productId) {
+        $product = Product::find($productId);
+        $redirect = "produkte/" . $product->slug;
+        $this->doDelete($productId, $redirect);
+    }
+
     public static function getWishlistContent(): array
     {
         $wishlist = Session::get(self::WISHLIST_SESSION_KEY, []);
         $products = [];
 
-        foreach ($wishlist as $productId ) {
+        foreach ($wishlist as $productId) {
             $product = Product::find($productId);
             $products[] = $product;
         }
@@ -72,7 +79,15 @@ class WishlistController
         $wishlist = Session::get(self::WISHLIST_SESSION_KEY, []);
 
         if (!empty($wishlist)) {
-            echo "<span class='nav__icon-badge'>". count($wishlist) . "</span>";
+            echo "<span class='nav__icon-badge'>" . count($wishlist) . "</span>";
         }
+    }
+
+    public static function hasProduct(int $productId): bool
+    {
+        $wishlist = Session::get(self::WISHLIST_SESSION_KEY, []);
+
+        return array_search($productId, $wishlist) !== false;
+
     }
 }

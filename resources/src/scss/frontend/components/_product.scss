@@ -16,6 +16,12 @@
   &__item {
     grid-column: span 1;
     background: map.get($colors-light, white);
+    @include border-radius;
+    @include box-shadow;
+    @include box-shadow-hover;
+    &:hover {
+      transform: scale(1.01);
+    }
   }
 
   &__card {

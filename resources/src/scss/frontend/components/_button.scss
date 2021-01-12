@@ -9,8 +9,8 @@ button {
   cursor: pointer;
 }
 
-button.button,
-a.button {
+
+.button {
   display: inline-flex;
   padding: .75rem 1.25rem;
   font-size: 1rem;
@@ -19,6 +19,7 @@ a.button {
   text-align: center;
   align-items: center;
   justify-content: center;
+  @include border-radius;
 
   & > .icon__wrapper + span {
     margin-left: .8rem;
@@ -37,7 +38,7 @@ a.button {
     border: 1px solid map.get($colors-light, primary);
     color: map.get($colors-light, white);
 
-    & svg {
+    & .icon__wrapper > svg {
       fill: map.get($colors-light, white);
     }
   }
@@ -46,13 +47,13 @@ a.button {
     border: 1px solid map.get($colors-light, primary);
     color: map.get($colors-light, primary);
 
-    & svg {
+    & .icon__wrapper > svg {
       fill: map.get($colors-light, primary);
     }
   }
 
   &--full-width {
-    display: block;
+    display: flex;
     width: 100%;
   }
 }

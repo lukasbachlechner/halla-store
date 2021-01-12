@@ -58,6 +58,7 @@ return [
     '/wunschliste' => [WishlistController::class, 'show'],
     '/wunschliste/add/{id}/do' => [WishlistController::class, 'doAdd'],
     '/wunschliste/delete/{id}/do' => [WishlistController::class, 'doDelete'],
+    '/wunschliste/delete/{id}/do/fromProduct' => [WishlistController::class, 'doDeleteFromProductPage'],
 
 
     /**

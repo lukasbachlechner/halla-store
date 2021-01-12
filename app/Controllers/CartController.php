@@ -15,10 +15,11 @@ class CartController
 
     public function show()
     {
-        [$products, $total] = self::getCartContent();
+        [$products, $total, $tax] = self::getCartContent();
         View::render('cart', [
             'products' => $products,
-            'total' => $total
+            'total' => $total,
+            'tax' => $tax
         ]);
     }
 
@@ -92,16 +93,19 @@ class CartController
         $cart = Session::get(self::CART_SESSION_KEY, []);
         $products = [];
         $total = 0;
+        $tax = 0;
 
         foreach ($cart as $productId => $quantity) {
             $product = Product::find($productId);
             $product->quantity = $quantity;
             $product->subtotal = $quantity * $product->price;
+            $taxMultiplier = $product->tax_rate / 100;
+            $tax += $product->subtotal / (1 + $taxMultiplier) * $taxMultiplier;
             $total += $product->subtotal;
             $products[] = $product;
         }
 
-        return [$products, $total];
+        return [$products, $total, $tax];
     }
 
     public static function displayCartBadge()
