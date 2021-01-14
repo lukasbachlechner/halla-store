@@ -33,6 +33,11 @@ class AuthController
             }
 
             $requestedPath = Session::getAndForget('requestedPath403', '');
+
+            if(isset($_POST['redirectAfterLogin'])) {
+                $requestedPath = $_POST['redirectAfterLogin'];
+            }
+
             $redirectTo = !empty($requestedPath) ? $requestedPath : '/';
             $user->login($redirectTo, $remember);
         } else {

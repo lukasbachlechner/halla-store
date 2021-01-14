@@ -14,7 +14,7 @@ button {
   display: inline-flex;
   padding: .75rem 1.25rem;
   font-size: 1rem;
-  line-height: 1;
+  height: 52.5px;
   text-decoration: none;
   text-align: center;
   align-items: center;
@@ -37,6 +37,7 @@ button {
     background: map.get($colors-light, primary);
     border: 1px solid map.get($colors-light, primary);
     color: map.get($colors-light, white);
+
 
     & .icon__wrapper > svg {
       fill: map.get($colors-light, white);

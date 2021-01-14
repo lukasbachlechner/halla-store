@@ -283,9 +283,9 @@ class Router
          * sonst immer 404 anzeigen.
          */
         if ($error === '403') {
-            self::redirectTo('403');
+            self::redirectTo('forbidden');
         } else {
-            self::redirectTo('404');
+            self::redirectTo('not-found');
         }
     }
 

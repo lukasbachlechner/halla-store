@@ -10,7 +10,6 @@
     </div>
 
 
-
     <div class="form__row mt--3">
         <div class="form__group form__group--checkbox">
             <input type="checkbox" name="remember" id="remember">
@@ -23,8 +22,14 @@
             </button>
         </div>
     </div>
+
+    <?php if (isset($redirectAfterLogin)): ?>
+        <input type="hidden" value="<?php echo $redirectAfterLogin; ?>" name="redirectAfterLogin">
+    <?php endif; ?>
 </form>
 
-<p class="mt--3">
-    Du hast noch kein Konto? <a href="registrieren">Jetzt registrieren</a>
-</p>
+<?php if (!isset($hideSignUpLink)): ?>
+    <p class="mt--3">
+        Du hast noch kein Konto? <a href="registrieren">Jetzt registrieren</a>
+    </p>
+<?php endif; ?>

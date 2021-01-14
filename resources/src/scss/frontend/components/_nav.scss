@@ -45,6 +45,10 @@
     width: 25vw;
     background: map.get($colors-light, white);
     display: none;
+    @include box-shadow;
+    @include border-radius;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   &__item {

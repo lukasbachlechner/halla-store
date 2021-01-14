@@ -27,7 +27,7 @@
                                     <img src="<?php echo $product->getImages(true)[0]->path; ?>" alt="">
                                 </a>
                                 <span class="cart__item-name"><?php echo $product->name; ?></span>
-                                <span class="cart__item-single-price"><?php echo \App\Models\Product::formatPrice($product->price); ?>/Stk</span>
+                                <span class="cart__item-single-price"><?php echo \App\Models\Product::formatPrice($product->price); ?></span>
                                 <div class="text--center cart__quantity">
                                     <label for="quantityInput-<?php echo $product->id; ?>" class="sr-only">Menge</label>
                                     <a href="warenkorb/removeOne/<?php echo $product->id; ?>/do"><?php echo \Core\View::getIcon('minus') ?></a>
@@ -56,7 +56,7 @@
                             <span class="text--right"><?php echo \App\Models\Product::formatPrice($tax); ?></span>
                         </div>
                         <a href="bestellen"
-                           class="button button--primary button--full-width"><span>Zur Kasse</span><?php echo \Core\View::getIcon('arrow-forward') ?>
+                           class="button button--primary button--full-width"><span>Zur Kassa</span><?php echo \Core\View::getIcon('arrow-forward') ?>
                         </a>
                     </div>
                 </footer>

@@ -56,16 +56,20 @@ class Product extends BaseModel
 
     public static function findBySlug(string $slug)
     {
-        $db = new Database();
-        $tableName = self::getTableNameFromClassName();
-
-        $result = $db->query("SELECT * FROM $tableName WHERE slug = ?", ['s:slug' => $slug]);
+        $result = self::findAllBySlug($slug);
 
         if (!empty($result)) {
             return new self($result[0]);
         } else {
             Router::errorPage();
         }
+    }
+
+    public static function findAllBySlug(string $slug) {
+        $db = new Database();
+        $tableName = self::getTableNameFromClassName();
+
+        return $db->query("SELECT * FROM $tableName WHERE slug = ?", ['s:slug' => $slug]);
     }
 
     public function generateSlug()
@@ -87,6 +91,13 @@ class Product extends BaseModel
 
         if (empty($slug)) {
             return false;
+        }
+
+        $productsWithSameSlug = self::findAllBySlug($slug);
+        $slugExists = !empty($productsWithSameSlug);
+        if($slugExists) {
+            $newSlugId = count($productsWithSameSlug) + 1;
+            $slug .= "-$newSlugId";
         }
 
         return $slug;

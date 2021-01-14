@@ -2,7 +2,6 @@ export default class Menu {
     private readonly mainList: Element;
     private navContainer: Element;
     private trigger: Element;
-    private triggerIcon: HTMLImageElement;
     private menuIsOpen: boolean;
     private readonly microLoginForm: Element;
     private wrapper: Element;
@@ -12,7 +11,6 @@ export default class Menu {
         this.mainList = document.querySelector('#navMainList');
         this.navContainer = document.querySelector('nav.nav');
         this.trigger = document.querySelector('#menuTrigger');
-        this.triggerIcon = this.trigger.querySelector('img');
         this.menuIsOpen = false;
 
         if (this.mainList) {
@@ -44,13 +42,11 @@ export default class Menu {
     closeMenu() {
         this.mainList.classList.remove('nav--open');
         this.navContainer.classList.remove('nav--open');
-        this.triggerIcon.src = this.triggerIcon.src.replace('menu-close.svg', 'menu.svg');
     }
 
     openMenu() {
         this.mainList.classList.add('nav--open');
         this.navContainer.classList.add('nav--open');
-        this.triggerIcon.src = this.triggerIcon.src.replace('menu.svg', 'menu-close.svg');
     }
 
     preventHover() {

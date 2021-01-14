@@ -7,6 +7,7 @@ use App\Controllers\AuthController;
 use App\Controllers\AdminController;
 use App\Controllers\CartController;
 use App\Controllers\WishlistController;
+use App\Controllers\OrderController;
 
 /**
  * Die Dateien im /routes Ordner beinhalten ein Mapping von einer URL auf eine eindeutige Controller & Action
@@ -55,10 +56,18 @@ return [
     '/warenkorb/removeOne/{id}/do' => [CartController::class, 'doRemoveOne'],
     '/warenkorb/delete/{id}/do' => [CartController::class, 'doDelete'],
 
+    /**
+     * Wishlist-Routes
+     */
     '/wunschliste' => [WishlistController::class, 'show'],
     '/wunschliste/add/{id}/do' => [WishlistController::class, 'doAdd'],
     '/wunschliste/delete/{id}/do' => [WishlistController::class, 'doDelete'],
     '/wunschliste/delete/{id}/do/fromProduct' => [WishlistController::class, 'doDeleteFromProductPage'],
+
+    /**
+     * Order-Routes
+     */
+    '/bestellen' => [OrderController::class, 'checkout'],
 
 
     /**
@@ -69,6 +78,6 @@ return [
     /**
      * Fehlerseiten-Routes
      */
-    '/404' => [SiteController::class, 'error404'],
-    '/403' => [SiteController::class, 'error403']
+    '/not-found' => [SiteController::class, 'error404'],
+    '/forbidden' => [SiteController::class, 'error403']
 ];

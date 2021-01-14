@@ -21,7 +21,6 @@
     grid-gap: 1rem;
     padding: 1rem 2rem;
 
-
     @include media-up(md) {
       grid-template-columns: 4rem 2fr 1fr [sum-start] 1fr 1fr [sum-end];
     }
