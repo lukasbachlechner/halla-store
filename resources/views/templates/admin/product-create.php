@@ -3,7 +3,7 @@
         <div class="page__header">
             <h1>Neues Produkt</h1>
 
-            <button class="button button--success button--with-icon"><?php echo \Core\View::getIcon('save') ?>
+            <button class="button button--success "><?php echo \Core\View::getIcon('save') ?>
                 Speichern
             </button>
         </div>

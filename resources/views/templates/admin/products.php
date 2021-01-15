@@ -1,7 +1,7 @@
 <div class="page__header">
     <h1>Alle Produkte (<?php echo count($products); ?>)</h1>
 
-    <a class="button button--primary button--with-icon" href="admin/produkte/add"><?php echo \Core\View::getIcon('plus') ?>Neues Produkt</a>
+    <a class="button button--primary " href="admin/produkte/add"><?php echo \Core\View::getIcon('plus') ?>Neues Produkt</a>
 </div>
 
 <div class="list">

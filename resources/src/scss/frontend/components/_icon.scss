@@ -4,6 +4,10 @@
 
 .icon {
   &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     & > svg {
       width: 1.2rem;
       fill: map.get($colors-light, text);

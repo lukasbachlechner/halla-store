@@ -4,11 +4,25 @@
 
 .button {
   display: inline-flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: .75rem 1.25rem;
+  height: 52.5px;
   @include border-radius;
   text-decoration: none;
+
+
+  & > .icon__wrapper + span {
+    margin-left: .8rem;
+  }
+
+  & > span + .icon__wrapper {
+    margin-left: .8rem;
+  }
+
+  & > .icon__wrapper > svg {
+    fill: currentColor;
+  }
 
   &--primary {
     background: map.get($ui-colors, primary);
@@ -32,22 +46,44 @@
     & .button + .button {
       margin-left: 1rem;
     }
+
+    &--mobile-float {
+      position: fixed;
+      top: 4rem;
+      left: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      z-index: 100;
+      background: map.get($colors-light, white);
+      @include box-shadow;
+
+      @include dark-mode {
+        background: map.get($colors-dark, header);
+      }
+
+      & > .button {
+        width: 50%;
+      }
+
+      @include media-up(md) {
+        position: static;
+        background: transparent;
+        width: auto;
+        padding: 0;
+
+        @include dark-mode {
+          background: transparent;
+        }
+
+        & > .button {
+          width: auto;
+        }
+      }
+    }
   }
 
   &--full-width {
     width: 100%;
     justify-content: center;
-  }
-
-
-
-  &--with-icon {
-    & > .icon__wrapper {
-      margin-right: .5rem;
-
-      & > svg {
-        fill: map.get($colors-dark, white);
-      }
-    }
   }
 }

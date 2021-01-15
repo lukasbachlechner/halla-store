@@ -12,9 +12,11 @@
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
+    grid-auto-rows: 5rem;
 
     @include media-up(lg) {
       grid-template-columns: repeat(5, 1fr);
+      grid-auto-rows: 10rem;
     }
   }
 

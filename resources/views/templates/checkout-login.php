@@ -2,11 +2,12 @@
     <div class="section__header">
         <h1>Bestellung abschließen</h1>
     </div>
+    <p class="mb--6">Bitte logge dich ein, um fortzufahren, oder mach als Gast weiter.</p>
     <div class="order__wrapper order__wrapper--half">
         <div class="order__wrapper--left">
             <div class="order__card">
                 <h2>Einloggen</h2>
-                <?php \Core\View::renderPartial('login-form', ['redirectAfterLogin' => 'bestellen/loggedin']); ?>
+                <?php \Core\View::renderPartial('login-form', ['redirectAfterLogin' => 'bestellen/adresse']); ?>
             </div>
         </div>
 

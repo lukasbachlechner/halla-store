@@ -34,3 +34,18 @@ a {
 ul {
   list-style: none;
 }
+
+fieldset {
+  border: none;
+
+  & > legend {
+    float: left;
+    @include fluid-type(20, 24);
+    margin-bottom: 1rem;
+    font-weight: bold;
+
+    & + * {
+      clear: both;
+    }
+  }
+}

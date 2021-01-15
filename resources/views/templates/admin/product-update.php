@@ -4,13 +4,13 @@
 
         <div class="page__header">
             <h1>"<?php echo $product->name; ?>" bearbeiten</h1>
-            <div class="button__group">
-                <a class="button button--error button--with-icon"
+            <div class="button__group button__group--mobile-float">
+                <a class="button button--error"
                    href="admin/produkte"><?php echo \Core\View::getIcon('menu-close') ?>
-                    Abbrechen
+                    <span>Abbrechen</span>
                 </a>
-                <button class="button button--success button--with-icon"><?php echo \Core\View::getIcon('save') ?>
-                    Aktualisieren
+                <button class="button button--success"><?php echo \Core\View::getIcon('save') ?>
+                    <span>Aktualisieren</span>
                 </button>
             </div>
         </div>
@@ -61,9 +61,9 @@
                         ]]); ?>
                     </div>
                     <div class="form__row">
-                        <a href="/produkte/<?php echo $product->slug; ?>" class="button button--primary button--with-icon button--full-width" target="_blank">
+                        <a href="/produkte/<?php echo $product->slug; ?>" class="button button--primary  button--full-width" target="_blank">
                             <?php echo \Core\View::getIcon('external-link'); ?>
-                            Zur Produktseite</a>
+                            <span>Zur Produktseite</span></a>
                     </div>
                 </fieldset>
 

@@ -57,11 +57,20 @@
     &--half {
       display: grid;
     }
+
+    &--shipping-address {
+      display: none;
+    }
   }
 
   &__summary {
     display: flex;
     flex-direction: column;
+
+    @include media-up(md) {
+      position: sticky;
+      top: 7rem;
+    }
 
     &-item {
       display: grid;

@@ -8,7 +8,7 @@ use App\Controllers\AdminController;
 use App\Controllers\CartController;
 use App\Controllers\WishlistController;
 use App\Controllers\OrderController;
-
+use App\Controllers\AddressController;
 /**
  * Die Dateien im /routes Ordner beinhalten ein Mapping von einer URL auf eine eindeutige Controller & Action
  * kombination. Als Konvention definieren wir, dass URL-Parameter mit {xyz} definiert werden müssen, damit das Routing
@@ -67,7 +67,15 @@ return [
     /**
      * Order-Routes
      */
-    '/bestellen' => [OrderController::class, 'checkout'],
+    '/bestellen/nicht-eingeloggt' => [OrderController::class, 'checkoutLogin'],
+    '/bestellen/adresse' => [OrderController::class, 'checkoutAddressForm'],
+    '/bestellen/zahlungsart' => [OrderController::class, 'checkoutPaymentForm'],
+    '/bestellen/zusammenfassung' => [OrderController::class, 'checkoutSummary'],
+
+    /**
+     * Address-Routes
+     */
+    '/adresse/create/do' => [AddressController::class, 'doCreate'],
 
 
     /**

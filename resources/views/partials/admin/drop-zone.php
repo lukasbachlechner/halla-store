@@ -9,8 +9,9 @@
 
     <div class="drop-zone" id="dropZone">
         <div class="drop-zone__prompt">
-            <button class="button button--primary button--with-icon"
-                    id="uploadButton"><?php echo \Core\View::getIcon("upload") ?> Bilder auswählen
+            <button class="button button--primary "
+                    id="uploadButton"><?php echo \Core\View::getIcon("upload") ?>
+                <span>Bilder auswählen</span>
             </button>
             <p class="mt--3">oder hierher ziehen</p>
         </div>

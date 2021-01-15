@@ -1,7 +1,7 @@
 <?php
 
 return  [
-    'baseurl' => 'http://local.halla.store',
+    'baseurl' => 'https://halla.store.local',
     'default-layout' => 'default',
     'storage-path' => 'storage/',
     'upload-path' => 'uploads/',

@@ -27,5 +27,8 @@
             <span>USt.</span>
             <span class="order__summary-total"><?php echo \App\Models\Product::formatPrice($tax); ?></span>
         </li>
+
+        <button class="button button--primary button--full-width mt--4"><span>Bestellung abschließen</span> <?php echo \Core\View::getIcon('arrow-forward'); ?>
+        </button>
     </ul>
 </div>

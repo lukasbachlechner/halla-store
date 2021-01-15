@@ -55,7 +55,7 @@
                             <span>USt.</span>
                             <span class="text--right"><?php echo \App\Models\Product::formatPrice($tax); ?></span>
                         </div>
-                        <a href="bestellen"
+                        <a href="bestellen/<?php echo \App\Models\User::isLoggedIn() ? 'adresse' : 'nicht-eingeloggt' ?>"
                            class="button button--primary button--full-width"><span>Zur Kassa</span><?php echo \Core\View::getIcon('arrow-forward') ?>
                         </a>
                     </div>

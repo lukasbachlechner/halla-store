@@ -2,6 +2,17 @@
 @use '../../shared/variables' as *;
 @use 'sass:map';
 
+@font-face {
+  font-family: 'Poppins';
+  src: local('Poppins'), url("/storage/assets/fonts/Poppins-Regular.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: local('Poppins Bold'), url("/storage/assets/fonts/Poppins-Bold.ttf") format('truetype');
+  font-weight: 700;
+}
+
 body {
   font-family: Poppins, sans-serif;
   color: map.get($colors-light, text);

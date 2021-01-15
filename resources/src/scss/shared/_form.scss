@@ -40,7 +40,7 @@
     }
 
     & label,
-    & .form__label{
+    & .form__label {
       display: block;
       margin-bottom: .25rem;
       @include fluid-type(12, 16);
@@ -54,6 +54,95 @@
       }
     }
 
+    &--justify-end {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+
+    &--radio {
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      position: relative;
+      min-height: 4rem;
+
+      &-checkmark {
+        position: absolute;
+        top: 2rem;
+        transform: translateY(-50%);
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        border: 1px solid map.get($colors-light, light-grey);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & > .icon__wrapper {
+          display: none;
+        }
+      }
+
+      &-form {
+        margin-top: -1rem;
+        padding: 1rem 1rem 1rem 4rem;
+        @include border-radius;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border: 1px solid map.get($colors-light, primary);
+        border-top-color: map.get($colors-light, white);
+        display: none;
+      }
+
+      & &-label {
+        margin-bottom: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 4rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding-left: 4rem;
+        border: 1px solid map.get($colors-light, light-grey);
+        cursor: pointer;
+        @include border-radius;
+
+        &:hover {
+          border-color: map.get($colors-light, primary);
+        }
+      }
+
+      & > input[type="radio"] {
+        display: none;
+
+        &:checked {
+          & ~ label {
+            border-color: map.get($colors-light, primary);
+          }
+
+          & ~ .form__group--radio-label-form {
+            border-bottom: 1px solid transparent;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+
+          & ~ .form__group--radio-checkmark {
+            border-color: map.get($colors-light, primary);
+            background: map.get($colors-light, primary);
+
+            & > .icon__wrapper {
+              display: flex;
+
+              & > svg {
+                fill: map.get($colors-light, white);
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
 

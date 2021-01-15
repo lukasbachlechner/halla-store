@@ -85,4 +85,18 @@ class Form
     {
         return isset($additionalOptions[$value]) && strlen($additionalOptions[$value]) > 0;
     }
+
+    public static function renderRadioGroup(string $name, array $values)
+    {
+        foreach ($values as $key => $value) {
+            $id = $name . '-' . $key;
+            echo  "<div class='form__group form__group--radio'>";
+            echo "<input type='radio' name='$name' id='$id'>";
+            echo "<div class='form__group--radio-checkmark'>";
+            echo View::getIcon('checkmark');
+            echo "</div>";
+            echo "<label for='$id' class='form__group--radio-label'>$value</label>";
+            echo "</div>";
+        }
+    }
 }

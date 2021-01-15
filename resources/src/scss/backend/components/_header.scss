@@ -4,14 +4,14 @@
 
 .header {
   &__wrapper {
-    height: map.get($nav-height, small);
+    height: map.get($nav-height, big);
     color: map.get($colors-light, text);
     background: map.get($colors-light, white);
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
-    padding: 0 1rem;
+    padding: 0 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
