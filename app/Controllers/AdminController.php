@@ -4,6 +4,7 @@
 namespace App\Controllers;
 
 
+use App\Models\DeliveryMethod;
 use App\Models\Product;
 use Core\View;
 
@@ -14,4 +15,6 @@ class AdminController
     {
         View::render('admin/dashboard', [], 'admin');
     }
+
+
 }

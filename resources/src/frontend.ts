@@ -1,12 +1,11 @@
 import './scss/frontend.scss';
 import Menu from "./js/Menu";
 import ImageGallery from "./js/ImageGallery";
-import RadioFormHandler from "./js/RadioFormHandler";
+import CheckoutFormHandler from "./js/CheckoutFormHandler";
 
 new Menu();
 new ImageGallery('#imageGallery');
-new RadioFormHandler('paymentMethod', '#newPaymentForm', 'newPaymentChecked');
-new RadioFormHandler('deliveryAddress', '#newAddressForm', 'newAddressChecked');
+new CheckoutFormHandler();
 
 document.addEventListener('DOMContentLoaded', () => {
     const loadingScreen: HTMLElement = document.querySelector('.loading-screen');

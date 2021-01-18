@@ -67,7 +67,7 @@
                     </div>
                 </fieldset>
 
-                <?php \Core\View::renderPartial('admin/danger-zone', ['product' => $product]); ?>
+                <?php \Core\View::renderPartial('admin/danger-zone', [['route' => "admin/produkt/delete/{$product->id}/do"]]); ?>
             </div>
         </div>
     </form>

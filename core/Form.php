@@ -13,7 +13,7 @@ class Form
      * @param string $inputType
      * @param array $additionalOptions
      */
-    public static function renderGroup(string $name, string $labelText, string $inputType = 'text', array $additionalOptions = ['class' => '', 'describedBy' => '', 'selectOptions' => [], 'value' => ''])
+    public static function renderGroup(string $name, string $labelText, string $inputType = 'text', array $additionalOptions = ['class' => '', 'describedBy' => '', 'selectOptions' => [], 'value' => '', 'required' => false])
     {
 
         $checkboxClass = $inputType === 'checkbox' ? 'form__group--checkbox' : '';
@@ -23,6 +23,8 @@ class Form
         $isPassword = $inputType === 'password';
 
         $label = "<label for='$name'>$labelText</label>";
+
+        $required = $additionalOptions['required'] === true ? 'required' : '';
 
 
         $ariaDescribedBy = '';
@@ -68,7 +70,7 @@ class Form
             echo "<input type='number' min='0' step='1' name='$name' id='$name' class='form__input' value='$oldValue' $ariaDescribedBy/>";
         } else {
             echo "<label for='$name'>$labelText</label>";
-            echo "<input type='$inputType' name='$name' id='$name' class='form__input' value='$oldValue' $ariaDescribedBy/>";
+            echo "<input type='$inputType' name='$name' id='$name' class='form__input' value='$oldValue' $ariaDescribedBy $required/>";
         }
 
         echo "</div>";
@@ -91,7 +93,7 @@ class Form
         foreach ($values as $key => $value) {
             $id = $name . '-' . $key;
             echo  "<div class='form__group form__group--radio'>";
-            echo "<input type='radio' name='$name' id='$id'>";
+            echo "<input type='radio' name='$name' id='$id' value='$key'>";
             echo "<div class='form__group--radio-checkmark'>";
             echo View::getIcon('checkmark');
             echo "</div>";

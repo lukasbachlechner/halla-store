@@ -1,6 +1,8 @@
 <?php
 
+use App\Controllers\DeliveryMethodController;
 use App\Controllers\HomeController;
+use App\Controllers\PaymentMethodController;
 use App\Controllers\ProductController;
 use App\Controllers\SiteController;
 use App\Controllers\AuthController;
@@ -40,6 +42,19 @@ return [
     '/admin/produkte/edit/{id}' => [ProductController::class, 'updateForm'],
     '/admin/produkte/edit/{id}/do' => [ProductController::class, 'doUpdate'],
     '/admin/produkte/delete/{id}/do' => [ProductController::class, 'doDelete'],
+    '/admin/versand' => [DeliveryMethodController::class, 'showAll'],
+    '/admin/versand/add' => [DeliveryMethodController::class, 'createForm'],
+    '/admin/versand/add/do' => [DeliveryMethodController::class, 'doCreate'],
+    '/admin/versand/edit/{id}' => [DeliveryMethodController::class, 'updateForm'],
+    '/admin/versand/edit/{id}/do' => [DeliveryMethodController::class, 'doUpdate'],
+    '/admin/versand/delete/{id}/do' => [DeliveryMethodController::class, 'doDelete'],
+
+    '/admin/zahlungsart' => [PaymentMethodController::class, 'showAll'],
+    '/admin/zahlungsart/add' => [PaymentMethodController::class, 'createForm'],
+    '/admin/zahlungsart/add/do' => [PaymentMethodController::class, 'doCreate'],
+    '/admin/zahlungsart/edit/{id}' => [PaymentMethodController::class, 'updateForm'],
+    '/admin/zahlungsart/edit/{id}/do' => [PaymentMethodController::class, 'doUpdate'],
+    '/admin/zahlungsart/delete/{id}/do' => [PaymentMethodController::class, 'doDelete'],
 
     /**
      * Product-Routes
@@ -68,8 +83,8 @@ return [
      * Order-Routes
      */
     '/bestellen/nicht-eingeloggt' => [OrderController::class, 'checkoutLogin'],
-    '/bestellen/adresse' => [OrderController::class, 'checkoutAddressForm'],
-    '/bestellen/zahlungsart' => [OrderController::class, 'checkoutPaymentForm'],
+    '/bestellen' => [OrderController::class, 'checkoutForm'],
+    '/bestellen/create/do' => [OrderController::class, 'doCreate'],
     '/bestellen/zusammenfassung' => [OrderController::class, 'checkoutSummary'],
 
     /**

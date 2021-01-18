@@ -15,7 +15,7 @@
             <div class="order__card">
                 <h2>Als Gast fortfahren</h2>
                 <a class="button button--secondary"
-                   href="bestellen/gast"><span>Weiter</span><?php echo \Core\View::getIcon('arrow-forward'); ?></a>
+                   href="bestellen"><span>Weiter</span><?php echo \Core\View::getIcon('arrow-forward'); ?></a>
             </div>
         </div>
 

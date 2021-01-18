@@ -18,7 +18,7 @@
 
   &__row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
 
     @include media-up(sm) {
@@ -43,7 +43,7 @@
     & .form__label {
       display: block;
       margin-bottom: .25rem;
-      @include fluid-type(12, 16);
+      font-size: .9rem;
       user-select: none;
     }
 
@@ -69,7 +69,7 @@
 
       &-checkmark {
         position: absolute;
-        top: 2rem;
+        top: 50%;
         transform: translateY(-50%);
         width: 1.5rem;
         height: 1.5rem;
@@ -86,13 +86,17 @@
 
       &-form {
         margin-top: -1rem;
-        padding: 1rem 1rem 1rem 4rem;
+        padding: 1rem;
         @include border-radius;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         border: 1px solid map.get($colors-light, primary);
         border-top-color: map.get($colors-light, white);
         display: none;
+
+        @include media-up(md) {
+          padding-left: 4rem;
+        }
       }
 
       & &-label {
@@ -100,17 +104,23 @@
         position: absolute;
         top: 0;
         left: 0;
-        height: 4rem;
+        height: 100%;
         width: 100%;
         display: flex;
         align-items: center;
-        padding-left: 4rem;
+        justify-content: space-between;
+        padding: 0 1rem 0 3rem;
         border: 1px solid map.get($colors-light, light-grey);
         cursor: pointer;
+        font-size: 1rem;
         @include border-radius;
 
         &:hover {
           border-color: map.get($colors-light, primary);
+        }
+
+        @include media-up(md) {
+          padding: 0 2rem 0 4rem;
         }
       }
 
@@ -147,6 +157,7 @@
 
 
   &__input {
+    background-clip: padding-box !important;
     width: 100%;
     border-radius: 0;
     padding: .75rem 1.25rem;
@@ -157,9 +168,42 @@
     border: 1px solid map.get($colors-light, light-grey);
     @include border-radius;
 
+    &:required:invalid {
+      box-shadow: none;
+      border-color: map.get($colors-light, error);
+    }
+
+    &:-moz-ui-invalid {
+      box-shadow: none;
+      border-color: map.get($colors-light, error);
+    }
+
     &:focus {
       border-color: map.get($colors-light, primary);
       outline: none;
     }
+
+    &--stripe {
+      display: flex;
+      align-items: center;
+
+      & > * {
+        flex-basis: 100%;
+      }
+    }
+
+
+
+
+
+    &--error {
+      margin-top: .25rem;
+      font-size: .9rem;
+      color: map.get($colors-light, error);
+    }
   }
+}
+
+.StripeElement--invalid {
+  border-color: map.get($colors-light, error);
 }

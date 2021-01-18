@@ -45,6 +45,8 @@ class Bootstrap
          */
         define('BASE_URL', Config::get('app.baseurl'));
 
+        require_once '../vendor/autoload.php';
+
         $router = new Router();
         $router->route();
     }

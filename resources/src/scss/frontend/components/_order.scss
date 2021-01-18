@@ -49,7 +49,7 @@
   }
 
   &__card {
-    padding: 2rem;
+    padding: 2rem 1rem;
     background: map.get($colors-light, white);
     @include box-shadow;
     @include border-radius;
@@ -58,8 +58,13 @@
       display: grid;
     }
 
-    &--shipping-address {
-      display: none;
+    & h2 {
+      width: 20ch;
+      hyphens: auto;
+    }
+
+    @include media-up(md) {
+      padding: 2rem;
     }
   }
 

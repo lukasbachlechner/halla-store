@@ -1,10 +1,12 @@
 <?php
 $links = [
     ['link' => 'dashboard', 'title' => 'Dashboard', 'icon' => 'dashboard'],
-    ['link' => 'bestellungen', 'title' => 'Bestellungen', 'icon' => 'orders'],
+    ['link' => 'bestellungen', 'title' => 'Bestellungen', 'icon' => 'inbox'],
     ['link' => 'produkte', 'title' => 'Produkte', 'icon' => 'products'],
     ['link' => 'benutzer', 'title' => 'Benutzer', 'icon' => 'user'],
-    ['link' => 'newsletter', 'title' => 'Newsletter', 'icon' => 'newsletter']
+    ['link' => 'newsletter', 'title' => 'Newsletter', 'icon' => 'newsletter'],
+    ['link' => 'versand', 'title' => 'Versandmethoden', 'icon' => 'delivery'],
+    ['link' => 'zahlungsart', 'title' => 'Zahlungsarten', 'icon' => 'credit-card']
 ];
 ?>
 
