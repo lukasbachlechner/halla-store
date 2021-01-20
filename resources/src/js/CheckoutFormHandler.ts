@@ -1,9 +1,10 @@
+import {loadStripe} from '@stripe/stripe-js/pure';
 import {
-    loadStripe,
     Stripe,
     StripeElementChangeEvent,
     Token
-} from '@stripe/stripe-js';
+} from '@stripe/stripe-js'
+
 
 export default class CheckoutFormHandler {
     PUBLISHABLE_KEY: string = 'pk_test_51IAyCqLekmfDkPLhIN6B4NrWKs0yhh6MXnxk6b3UOGgGH6h5pOxHCI7n5FvdsxWD7BhFuiN1YhWaHn4cW5XH4Dts00C1Ma0XGg';
@@ -22,24 +23,24 @@ export default class CheckoutFormHandler {
         if (this.form) {
             this.radioFormToggle('paymentMethod', '#newPaymentForm', 'newPaymentChecked', true);
             this.radioFormToggle('billingAddress', '#newAddressForm', 'newAddressChecked');
+
             this.differentShippingAddressToggle = document.querySelector('input#differentShippingAddressToggle');
             this.differentShippingAddressTemplate = document.querySelector('#differentShippingAddressTemplate');
 
             this.differentShippingAddressToggle.addEventListener('change', (e) => this.handleDifferentShippingAddress(e));
-            if(this.differentShippingAddressToggle.checked) {
+            if (this.differentShippingAddressToggle.checked) {
                 this.insertDifferentShippingAddressTemplate();
             }
 
-            this.addInputFocusEventListener();
-
-            /* loadStripe(this.PUBLISHABLE_KEY)
+            loadStripe(this.PUBLISHABLE_KEY)
                 .then(stripe => this.handleStripeForm(stripe));
-             */
+
         }
     }
 
     private handleRadioChange(e: Event, form: HTMLElement, formRadioButtonId: string, creditCardForm: boolean) {
         const clickedRadio = e.target as HTMLInputElement;
+        console.log(clickedRadio);
         if (clickedRadio.getAttribute('id') === formRadioButtonId) {
             form.style.display = 'block';
             if (creditCardForm) {
@@ -68,6 +69,7 @@ export default class CheckoutFormHandler {
     }
 
     private handleStripeForm(stripe: Stripe) {
+        console.log('stripe form')
         const elements = stripe.elements();
         const cardStyles = {
             base: {
@@ -135,7 +137,6 @@ export default class CheckoutFormHandler {
 
     private handleDifferentShippingAddress(e: Event) {
         const {checked} = this.differentShippingAddressToggle;
-        console.log(this.differentShippingAddressTemplate);
         if (checked) {
             this.insertDifferentShippingAddressTemplate();
         } else {
@@ -147,18 +148,6 @@ export default class CheckoutFormHandler {
         const cloned = this.differentShippingAddressTemplate.content.cloneNode(true);
         const billingAddressSection = this.form.querySelector('#billingAddressSection');
         billingAddressSection.parentNode.insertBefore(cloned, billingAddressSection.nextElementSibling);
-        this.addInputFocusEventListener();
-    }
-
-    private addInputFocusEventListener() {
-        this.allInputs = this.form.querySelectorAll('input');
-        this.allInputs.forEach(input =>{
-            input.addEventListener('focus', (e) => this.handleInputFocus(e));
-        });
-    }
-
-    private handleInputFocus(e: FocusEvent) {
-        const clickedInput = e.target as HTMLInputElement;
-        clickedInput.required = true;
+        this.radioFormToggle('shippingAddress', '#newShippingAddressForm', 'newShippingAddressChecked');
     }
 }

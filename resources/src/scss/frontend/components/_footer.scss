@@ -5,6 +5,7 @@
 .footer {
   background: map.get($colors-light, white);
   padding: 3rem 0;
+  margin-top: 5rem;
 
   &__container {
     display: flex;

@@ -72,4 +72,11 @@ class PaymentMethod extends BaseModel
         return $result;
 
     }
+
+    public function getFormatted() {
+        $formattedPrice = $this->price > 0 ? "(". Product::formatPrice($this->price) . ")" : '';
+        return "
+        <p>{$this->name} $formattedPrice</p>
+        ";
+    }
 }

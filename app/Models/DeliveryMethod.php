@@ -71,4 +71,11 @@ class DeliveryMethod extends BaseModel
         return $result;
 
     }
+
+    public function getFormatted() {
+        $formattedPrice = Product::formatPrice($this->price);
+        return "
+        <p>{$this->name} ($formattedPrice)</p>
+        ";
+    }
 }

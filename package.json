@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^1.11.0",
+    "@types/chart.js": "^2.9.29",
+    "chart.js": "^2.9.4",
     "eva-icons": "^1.1.3"
   }
 }

@@ -3,7 +3,9 @@
 
 namespace App\Controllers;
 
+use App\Models\Address;
 use App\Models\DeliveryMethod;
+use App\Models\Order;
 use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\User;
@@ -29,73 +31,238 @@ class OrderController
 
         $deliveryMethods = DeliveryMethod::all();
         $paymentMethods = PaymentMethod::all();
+        if (User::isLoggedIn()) {
+            $addresses = Address::findByUserId(User::getLoggedIn()->id);
+        } else {
+            $addresses = [];
+        }
 
 
         View::render('checkout', [
             'products' => $products,
             'total' => $total,
             'tax' => $tax,
+            'addresses' => $addresses,
             'deliveryMethods' => $deliveryMethods,
             'paymentMethods' => $paymentMethods
         ]);
     }
 
-    public function checkoutSummary()
-    {
-
+    public function showAll() {
+        $orders = Order::all();
+        View::render('admin/orders', [
+            'orders' => $orders
+        ], 'admin');
     }
 
-    public function doCreate()
+    public function checkoutSummary()
+    {
+        $orderToReview = Session::get('orderToReview');
+        [$products, $total, $tax] = CartController::getCartContent();
+
+        View::render('checkout-summary', [
+            'products' => $products,
+            'total' => $total,
+            'tax' => $tax,
+            'orderToReview' => $orderToReview
+        ]);
+    }
+
+    public function checkoutSuccess()
+    {
+        $orderId = Session::getAndForget('successfulOrderId');
+
+        View::render('checkout-success', [
+            'orderId' => $orderId,
+        ]);
+    }
+
+    public function doPrepare()
     {
         $errors = [];
 
-        if ($_POST['billingAddress'] === 'new' ||!isset($_POST['billingAddress'])) {
+        $hasNewBillingAddress = ($_POST['billingAddress'] === 'new' || !isset($_POST['billingAddress']));
+        $hasNewShippingAddress = (!isset($_POST['shippingAddress']) || $_POST['shippingAddress'] === 'new');
+
+        $hasDifferentShippingAddress = (isset($_POST['differentShippingAddressToggle']) && $_POST['differentShippingAddressToggle'] === 'on');
+
+
+        $isStripePayment = ($_POST['paymentMethod'] === 'stripe' && !empty($_POST['stripeToken']));
+
+
+        if ($hasNewBillingAddress) {
             $validator = new Validator();
             $validator->validate($_POST['first_name'], 'Vorname', true, 'textnum');
             $validator->validate($_POST['last_name'], 'Nachname', true, 'textnum');
             $validator->validate($_POST['street'], 'Straße & Hausnummer', true, 'textnum');
-            $validator->validate($_POST['email'], 'E-Mail-Adresse', true, 'email');
-            $validator->validate($_POST['phone'], 'Telefonnummer', true, 'phone');
             $validator->validate($_POST['zip'], 'PLZ', true, 'int', 4, 5);
             $validator->validate($_POST['city'], 'Ort', true, 'textnum');
+
+            if (!User::isLoggedIn()) {
+                $validator->validate($_POST['email'], 'E-Mail-Adresse', true, 'email');
+            }
 
             array_push($errors, ...$validator->getErrors());
         }
 
-        if(isset($_POST['differentShippingAddressToggle']) && $_POST['differentShippingAddressToggle'] === 'on') {
+        if ($hasDifferentShippingAddress && $hasNewShippingAddress) {
             $validator = new Validator();
             $validator->validate($_POST['shipping-first_name'], 'Lieferadresse: Vorname', true, 'textnum');
             $validator->validate($_POST['shipping-last_name'], 'Lieferadresse: Nachname', true, 'textnum');
             $validator->validate($_POST['shipping-street'], 'Lieferadresse: Straße & Hausnummer', true, 'textnum');
-            $validator->validate($_POST['shipping-email'], 'Lieferadresse: E-Mail-Adresse', true, 'email');
-            $validator->validate($_POST['shipping-phone'], 'Lieferadresse: Telefonnummer', true, 'phone');
             $validator->validate($_POST['shipping-zip'], 'Lieferadresse: PLZ', true, 'int', 4, 5);
             $validator->validate($_POST['shipping-city'], 'Lieferadresse: Ort', true, 'textnum');
+
+            if (!User::isLoggedIn()) {
+                $validator->validate($_POST['shipping-email'], 'Lieferadresse: E-Mail-Adresse', true, 'email');
+            }
+
             array_push($errors, ...$validator->getErrors());
         }
 
-        if ($_POST['paymentMethod'] === 'stripe' && !empty($_POST['stripeToken'])) {
-           // self::dispatchStripePayment();
-        }
-
-        if(!empty($errors)) {
+        if (!empty($errors)) {
             Session::set('errors', $errors);
             Router::redirectTo('bestellen');
         }
+
+
+        if ($hasNewBillingAddress) {
+            $billingAddress = new Address();
+            $billingAddress->first_name = $_POST['first_name'];
+            $billingAddress->last_name = $_POST['last_name'];
+            $billingAddress->street = $_POST['street'];
+            $billingAddress->zip = $_POST['zip'];
+            $billingAddress->city = $_POST['city'];
+            $billingAddress->country = $_POST['country'];
+
+            if (!User::isLoggedIn()) {
+                $billingAddress->email = $_POST['email'];
+            }
+        } else {
+            $billingAddress = Address::find($_POST['billingAddress']);
+        }
+
+
+        if ($hasDifferentShippingAddress && $hasNewShippingAddress) {
+            $shippingAddress = new Address();
+            $shippingAddress->first_name = $_POST['shipping-first_name'];
+            $shippingAddress->last_name = $_POST['shipping-last_name'];
+            $shippingAddress->street = $_POST['shipping-street'];
+            $shippingAddress->zip = $_POST['shipping-zip'];
+            $shippingAddress->city = $_POST['shipping-city'];
+            $shippingAddress->country = $_POST['shipping-country'];
+
+            if (!User::isLoggedIn()) {
+                $shippingAddress->email = $_POST['shippping-email'];
+            }
+        } elseif ($hasDifferentShippingAddress) {
+            $shippingAddress = Address::find($_POST['shippingAddress']);
+        }
+
+        $deliveryMethod = DeliveryMethod::find($_POST['deliveryMethod']);
+
+        if ($_POST['paymentMethod'] !== 'stripe') {
+            $paymentMethod = PaymentMethod::find($_POST['paymentMethod']);
+        } else {
+            $paymentMethod = $_POST['paymentMethod'];
+        }
+
+        if ($isStripePayment) {
+            $stripeToken = $_POST['stripeToken'];
+        } else {
+            $stripeToken = false;
+        }
+
+        $orderToReview = [
+            'billingAddress' => $billingAddress,
+            'shippingAddress' => $shippingAddress ?? $billingAddress,
+            'deliveryMethod' => $deliveryMethod,
+            'paymentMethod' => $paymentMethod,
+            'stripeToken' => $stripeToken
+        ];
+
+        Session::set('orderToReview', $orderToReview);
+
+        Router::redirectTo('bestellen/zusammenfassung');
     }
 
-    private static function dispatchStripePayment() {
+    public function doCreate()
+    {
+        $checkedOrder = Session::get('orderToReview');
+        $currentUser = User::getLoggedIn();
+        $currentUserId = $currentUser->id ?? null;
+        $currentUserEmail = $currentUser->email ?? null;
+
+
+        $billingAddress = $checkedOrder['billingAddress'];
+        $shippingAddress = $checkedOrder['shippingAddress'];
+
+        if(!isset($billingAddress->id)) {
+            if (isset($currentUserId)) {
+                $billingAddress->user_id = $currentUserId;
+            }
+
+            $billingAddress->save();
+        }
+
+        if ($billingAddress !== $shippingAddress && !isset($shippingAddress->id)) {
+            if (isset($currentUserId)) {
+                $shippingAddress->user_id = $currentUserId;
+            }
+
+            $shippingAddress->save();
+        }
+
+        $deliveryMethod = $checkedOrder['deliveryMethod'];
+        $paymentMethod = $checkedOrder['paymentMethod'];
+
+        [$products, $total, $tax] = CartController::getCartContent();
+        $paymentMethodPrice = $paymentMethod !== 'stripe' ? $paymentMethod->price : 0;
+        $paymentMethodId = $paymentMethod !== 'stripe' ? $paymentMethod->id : 0;
+        $grandTotal = $total + $paymentMethodPrice + $deliveryMethod->price;
+
+        $order = new Order();
+        $order->delivery_address_id = $shippingAddress->id;
+        $order->billing_address_id = $billingAddress->id;
+        $order->user_id = $currentUserId;
+        $order->paymentmethod_id = $paymentMethodId;
+        $order->deliverymethod_id = $deliveryMethod->id;
+        $order->total = $grandTotal;
+        $order->products = json_encode($products);
+        $orderSuccess = $order->save();
+
+        if($checkedOrder['stripeToken']) {
+            if($currentUserEmail === null) {
+                $email = $billingAddress->email;
+            } else {
+                $email = $currentUserEmail;
+            }
+            $charge = self::dispatchStripePayment($checkedOrder['stripeToken'], $order->id, $grandTotal, $email);
+        }
+
+        if($orderSuccess) {
+            Session::set('successfulOrderId', $order->id);
+            Session::forget('orderToReview');
+            Session::forget(CartController::CART_SESSION_KEY);
+            Router::redirectTo('bestellen/erfolgreich');
+        } else {
+            Router::redirectTo('bestellen/zusammenfassung');
+        }
+    }
+
+    private static function dispatchStripePayment(string $stripeToken, int $orderId, float $amount, string $email)
+    {
         Stripe::setApiKey('sk_test_51IAyCqLekmfDkPLhqKBvXyw4gFjSz20qiUxGk2U5Jw6i68C1mjgm7ROUQhzgoVq9RQr27KHR1pfmUTdpuOFzguKy00GqN0LwtP');
 
         $customer = Customer::create([
-            "email" => 'hi@lukasbachlechner.com',
-            "source" => $_POST['stripeToken']
+            "email" => $email,
+            "source" => $stripeToken
         ]);
 
-        $charge = Charge::create([
-            'amount' => 5000,
+        return Charge::create([
+            'amount' => $amount * 100,
             'currency' => 'eur',
-            'description' => 'Bestellung auf halla.store',
+            'description' => "Bestellung #{$orderId} auf halla.store",
             'customer' => $customer->id
         ]);
     }

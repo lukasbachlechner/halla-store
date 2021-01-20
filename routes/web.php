@@ -36,12 +36,16 @@ return [
      */
     '/admin' => [AdminController::class, 'dashboard'],
     '/admin/dashboard' => [AdminController::class, 'dashboard'],
+
+    '/admin/bestellungen' => [OrderController::class, 'showAll'],
+
     '/admin/produkte' => [ProductController::class, 'showAll'],
     '/admin/produkte/add' => [ProductController::class, 'createForm'],
     '/admin/produkte/add/do' => [ProductController::class, 'doCreate'],
     '/admin/produkte/edit/{id}' => [ProductController::class, 'updateForm'],
     '/admin/produkte/edit/{id}/do' => [ProductController::class, 'doUpdate'],
     '/admin/produkte/delete/{id}/do' => [ProductController::class, 'doDelete'],
+
     '/admin/versand' => [DeliveryMethodController::class, 'showAll'],
     '/admin/versand/add' => [DeliveryMethodController::class, 'createForm'],
     '/admin/versand/add/do' => [DeliveryMethodController::class, 'doCreate'],
@@ -85,7 +89,9 @@ return [
     '/bestellen/nicht-eingeloggt' => [OrderController::class, 'checkoutLogin'],
     '/bestellen' => [OrderController::class, 'checkoutForm'],
     '/bestellen/create/do' => [OrderController::class, 'doCreate'],
+    '/bestellen/prepare/do' => [OrderController::class, 'doPrepare'],
     '/bestellen/zusammenfassung' => [OrderController::class, 'checkoutSummary'],
+    '/bestellen/erfolgreich' => [OrderController::class, 'checkoutSuccess'],
 
     /**
      * Address-Routes

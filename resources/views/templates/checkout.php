@@ -1,8 +1,8 @@
-<?php \Core\View::renderPartial('errors'); ?>
-<form action="bestellen/create/do" class="form section cart__section" method="post" id="checkoutForm">
+<form action="bestellen/prepare/do" class="form section cart__section" method="post" id="checkoutForm">
     <div class="section__header">
         <h1>Bestellung abschließen</h1>
     </div>
+    <?php \Core\View::renderPartial('errors'); ?>
     <div class="order__wrapper">
         <div class="order__wrapper--left">
 
@@ -10,14 +10,28 @@
                 <h2>Rechnungsadresse</h2>
 
                 <?php if (\App\Models\User::isLoggedIn()): ?>
-                    <?php \Core\Form::renderRadioGroup('billingAddress', [
-                        '1' => 'Adresse 1',
-                        '2' => 'Adresse 2',
-                    ]); ?>
+                    <?php foreach ($addresses as $key => $address): ?>
+                        <div class="form__group form__group--radio">
+                            <input type="radio" name="billingAddress" id="billing-<?php echo $address->id; ?>"
+                                   value="<?php echo $address->id; ?>" <?php echo $key === 0 ? 'checked' : ''; ?>>
+                            <div class='form__group--radio-checkmark'>
+                                <?php echo \Core\View::getIcon('checkmark'); ?>
+                            </div>
+                            <label for="billing-<?php echo $address->id; ?>"
+                                   class='form__group--radio-label'><span><?php echo $address->getShortName(); ?></span></label>
+                        </div>
+                    <?php endforeach; ?>
+
+                    <?php
+                    $shouldBeChecked = false;
+                    if (\Core\Session::old("billingAddress") === 'new' || count($addresses) === 0) {
+                        $shouldBeChecked = true;
+                    }
+                    ?>
                     <div class="form__group form__group--radio">
                         <input type='radio' name='billingAddress' id='newAddressChecked'
                                class="form__group--radio-form-input"
-                               value="new" <?php echo \Core\Session::old("billingAddress") === 'new' ? 'checked' : ''; ?>>
+                               value="new" <?php echo $shouldBeChecked ? 'checked' : ''; ?>>
                         <label for="newAddressChecked" class="form__group--radio-label form__group--radio-label-form">Neue
                             Adresse</label>
                         <div class='form__group--radio-checkmark'>
@@ -40,7 +54,42 @@
             <template id="differentShippingAddressTemplate">
                 <section class="order__card order__card--shipping-address" id="differentShippingAddressSection">
                     <h2>Lieferadresse</h2>
-                    <?php \Core\View::renderPartial('address-form', ['prefix' => 'shipping']); ?>
+                    <?php if (\App\Models\User::isLoggedIn()): ?>
+                        <?php foreach ($addresses as $key => $address): ?>
+                            <div class="form__group form__group--radio">
+                                <input type="radio" name="shippingAddress" id="shipping-<?php echo $address->id; ?>"
+                                       value="<?php echo $address->id; ?>" <?php echo $key === 0 ? 'checked' : ''; ?>>
+                                <div class='form__group--radio-checkmark'>
+                                    <?php echo \Core\View::getIcon('checkmark'); ?>
+                                </div>
+                                <label for="shipping-<?php echo $address->id; ?>"
+                                       class='form__group--radio-label'><span><?php echo $address->getShortName(); ?></span></label>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php
+                        $shouldBeChecked = false;
+                        if (\Core\Session::old("shippingAddress") === 'new' || count($addresses) === 0) {
+                            $shouldBeChecked = true;
+                        }
+                        ?>
+                        <div class="form__group form__group--radio">
+                            <input type='radio' name='shippingAddress' id='newShippingAddressChecked'
+                                   class="form__group--radio-form-input"
+                                   value="new" <?php echo $shouldBeChecked ? 'checked' : ''; ?>>
+                            <label for="newShippingAddressChecked" class="form__group--radio-label form__group--radio-label-form">Neue
+                                Adresse</label>
+                            <div class='form__group--radio-checkmark'>
+                                <?php echo \Core\View::getIcon('checkmark'); ?>
+                            </div>
+                        </div>
+                        <div class="form__group--radio-form" id="newShippingAddressForm">
+                            <?php \Core\View::renderPartial('address-form', ['prefix' => 'shipping']); ?>
+                        </div>
+
+                    <?php else: ?>
+                        <?php \Core\View::renderPartial('address-form', ['prefix' => 'shipping']); ?>
+                    <?php endif; ?>
                 </section>
             </template>
 
@@ -95,7 +144,8 @@
             <?php \Core\View::renderPartial('order-summary', [
                 'products' => $products,
                 'total' => $total,
-                'tax' => $tax
+                'tax' => $tax,
+                'buttonText' => 'Bestellung überprüfen'
             ]); ?>
 
         </div>

@@ -5,11 +5,15 @@ if (isset($prefix)) {
     $prefix = '';
 } ?>
 
+
 <?php \Core\Form::renderGroup($prefix . 'first_name', 'Vorname'); ?>
 <?php \Core\Form::renderGroup($prefix . 'last_name', 'Nachname'); ?>
 <?php \Core\Form::renderGroup($prefix . 'street', 'Straße & Hausnummer'); ?>
-<?php \Core\Form::renderGroup($prefix . 'email', 'E-Mail-Adresse', 'email'); ?>
-<?php \Core\Form::renderGroup($prefix . 'phone', 'Telefonnummer', 'tel'); ?>
+<?php
+if (!\App\Models\User::isLoggedIn()) {
+    \Core\Form::renderGroup($prefix . 'email', 'E-Mail-Adresse', 'email');
+}
+?>
 
     <div class="form__row">
         <?php \Core\Form::renderGroup($prefix . 'zip', 'PLZ'); ?>

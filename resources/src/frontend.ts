@@ -8,6 +8,7 @@ new ImageGallery('#imageGallery');
 new CheckoutFormHandler();
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('loaded');
     const loadingScreen: HTMLElement = document.querySelector('.loading-screen');
     loadingScreen.remove();
 })

@@ -112,12 +112,7 @@ class Product extends BaseModel
 
         $tableName = self::getTableNameFromClassName();
 
-        $timestamp = time();
-
         if (!empty($this->id)) {
-            /**
-             * @todo: update product and return $result
-             */
             $result = $db->query("UPDATE $tableName SET name = ?, description = ?, price = ?, quantity_available = ?, quantity_sold = ?, slug = ?, is_active = ?, tax_rate = ? WHERE id = ?", [
                 's:name' => $this->name,
                 's:description' => $this->description,
