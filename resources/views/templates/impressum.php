@@ -2,28 +2,16 @@
     <h1>Impressum</h1>
 
     <h2>Icons & Bilder</h2>
-    <p>
-        Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a>
-        from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-    </p>
-</section>
+    <p>Informationspflicht laut §5 E-Commerce Gesetz, §14 Unternehmensgesetzbuch, §63 Gewerbeordnung und Offenlegungspflicht laut §25 Mediengesetz.<br /><br />
 
-<section class="section">
-    <h1>Impressum</h1>
+        Lukas Bachlechner<br /><br />
 
-    <h2>Icons & Bilder</h2>
-    <p>
-        Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a>
-        from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-    </p>
-</section>
+        Peheimweg 2,<br />
+        9905 Gaimberg,<br />
+        Österreich<br /><br />
 
-<section class="section">
-    <h1>Impressum</h1>
+        E-Mail: hi@lukasbachlechner.com<br />
 
-    <h2>Icons & Bilder</h2>
-    <p>
-        Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a>
-        from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+        Quelle: Erstellt mit dem Impressum Generator von AdSimple® in Kooperation mit meinhaushalt.at
     </p>
 </section>
