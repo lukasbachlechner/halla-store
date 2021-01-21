@@ -1,7 +1,6 @@
 <section class="section">
     <h1>Impressum</h1>
 
-    <h2>Icons & Bilder</h2>
     <p>Informationspflicht laut §5 E-Commerce Gesetz, §14 Unternehmensgesetzbuch, §63 Gewerbeordnung und Offenlegungspflicht laut §25 Mediengesetz.<br /><br />
 
         Lukas Bachlechner<br /><br />
