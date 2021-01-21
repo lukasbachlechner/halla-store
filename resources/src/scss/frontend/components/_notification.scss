@@ -4,12 +4,27 @@
 
 .notification {
   &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 1rem;
     margin-bottom: 1.5rem;
+    @include box-shadow;
+    @include border-radius;
   }
 
   &--error {
     background: map.get($colors-light, error);
     color: map.get($colors-light, white);
+  }
+
+  &--success {
+    background: map.get($ui-colors, success);
+    color: map.get($colors-light, white);
+  }
+
+  &--white {
+    background: map.get($colors-light, white);
+    color: map.get($colors-light, text);
   }
 }

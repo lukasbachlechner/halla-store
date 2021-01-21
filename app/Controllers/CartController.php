@@ -9,6 +9,10 @@ use Core\Router;
 use Core\Session;
 use Core\View;
 
+/**
+ * Class CartController
+ * @package App\Controllers
+ */
 class CartController
 {
     const CART_SESSION_KEY = 'cart';
@@ -23,6 +27,10 @@ class CartController
         ]);
     }
 
+    /**
+     * @param int $productId
+     * @param string $fromWishlist
+     */
     public function doAdd(int $productId, string $fromWishlist)
     {
         $cart = Session::get(self::CART_SESSION_KEY, []);
@@ -55,6 +63,9 @@ class CartController
         Router::redirectTo('warenkorb');
     }
 
+    /**
+     * @param int $productId
+     */
     public function doAddOne(int $productId)
     {
         $cart = Session::get(self::CART_SESSION_KEY);
@@ -65,6 +76,9 @@ class CartController
         Router::redirectTo('warenkorb');
     }
 
+    /**
+     * @param int $productId
+     */
     public function doRemoveOne(int $productId)
     {
         $cart = Session::get(self::CART_SESSION_KEY);
@@ -78,6 +92,9 @@ class CartController
         Router::redirectTo('warenkorb');
     }
 
+    /**
+     * @param int $productId
+     */
     public function doDelete(int $productId)
     {
         $cart = Session::get(self::CART_SESSION_KEY);
@@ -88,6 +105,9 @@ class CartController
         Router::redirectTo('warenkorb');
     }
 
+    /**
+     * @return array
+     */
     public static function getCartContent()
     {
         $cart = Session::get(self::CART_SESSION_KEY, []);

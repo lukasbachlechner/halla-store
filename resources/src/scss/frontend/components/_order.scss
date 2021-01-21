@@ -149,4 +149,44 @@
     grid-gap: 1rem;
     align-items: center;
   }
+
+  &__list {
+    display: grid;
+  }
+
+  &__link {
+    text-decoration: none;
+    & + & {
+      border-top: 1px solid map.get($colors-light, background);
+    }
+
+    &:hover {
+      background: map.get($colors-light, background);
+    }
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: 4rem 1fr 1fr 1fr;
+    align-items: center;
+    grid-gap: 1rem;
+    padding: 1rem;
+
+    &--last {
+      grid-template-columns: 3fr 1fr;
+      padding: .5rem 1rem;
+    }
+  }
+
+  &__img-wrapper {
+    display: block;
+    width: 4rem;
+    height: 4rem;
+
+    & > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
 }

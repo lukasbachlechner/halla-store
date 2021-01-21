@@ -2,6 +2,7 @@
 @use "frontend/components/notification";
 @use "shared/logo";
 @use "shared/form";
+@use "shared/badge";
 
 
 @use "frontend/base/reset";
@@ -18,5 +19,7 @@
 @use "frontend/components/cart";
 @use "frontend/components/gallery";
 @use "frontend/components/order";
+@use "frontend/components/hero";
+@use "frontend/components/notice";
 
 @use "shared/utilities";

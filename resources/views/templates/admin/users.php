@@ -1,5 +1,5 @@
 <div class="page__header">
-    <h1>Alle Benutzer (<?php echo count($users); ?>)</h1>
+    <h1>Alle Benutzer</h1>
 
     <?php if (\App\Models\User::hasPermission()): ?>
         <a class="button button--primary " href="admin/benutzer/add"><?php echo \Core\View::getIcon('plus') ?>

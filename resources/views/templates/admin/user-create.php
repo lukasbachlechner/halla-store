@@ -54,7 +54,7 @@
                 <fieldset>
                     <legend>Benutzerrechte</legend>
                     <div class="form__row">
-                        <?php \Core\Form::renderGroup('permission', 'Status', 'select', ['selectOptions' => $permissions, 'value' => $user->permission_id]); ?>
+                        <?php \Core\Form::renderGroup('permission', 'Status', 'select', ['selectOptions' => $permissions]); ?>
                     </div>
                 </fieldset>
 

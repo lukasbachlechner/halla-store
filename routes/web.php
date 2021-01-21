@@ -12,7 +12,7 @@ use App\Controllers\CartController;
 use App\Controllers\UserController;
 use App\Controllers\WishlistController;
 use App\Controllers\OrderController;
-use App\Controllers\AddressController;
+use App\Controllers\ProfileController;
 /**
  * Die Dateien im /routes Ordner beinhalten ein Mapping von einer URL auf eine eindeutige Controller & Action
  * kombination. Als Konvention definieren wir, dass URL-Parameter mit {xyz} definiert werden müssen, damit das Routing
@@ -107,11 +107,13 @@ return [
     '/bestellen/zusammenfassung' => [OrderController::class, 'checkoutSummary'],
     '/bestellen/erfolgreich' => [OrderController::class, 'checkoutSuccess'],
 
-    /**
-     * Address-Routes
-     */
-    '/adresse/create/do' => [AddressController::class, 'doCreate'],
-
+    '/profil' => [ProfileController::class, 'show'],
+    '/profil/bestellungen' => [ProfileController::class, 'showOrders'],
+    '/profil/bestellung/details/{id}' => [ProfileController::class, 'showSingleOrder'],
+    '/profil/bestellung/storno/{id}/do' => [ProfileController::class, 'doRefundOrder'],
+    '/profil/edit/do' => [ProfileController::class, 'doUpdate'],
+    '/profil/passwort/edit/do' => [ProfileController::class, 'doPasswordUpdate'],
+    '/profil/newsletter/toggle/do' => [ProfileController::class, 'doNewsletterToggle'],
 
     /**
      * Seiten-Routes

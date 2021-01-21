@@ -6,6 +6,10 @@ use Core\Config;
 use Core\Database;
 use Core\Models\BaseModel;
 
+/**
+ * Class Image
+ * @package App\Models
+ */
 class Image extends BaseModel
 {
 
@@ -32,6 +36,9 @@ class Image extends BaseModel
         $this->path = (string)$data['path'];
     }
 
+    /**
+     * @return array|bool|mixed|void
+     */
     public function save()
     {
         parent::save();
@@ -54,6 +61,10 @@ class Image extends BaseModel
 
     }
 
+    /**
+     * @param int $productId
+     * @return array|bool|mixed
+     */
     public function connectToProduct(int $productId)
     {
         $db = new Database();

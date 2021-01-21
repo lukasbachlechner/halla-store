@@ -23,20 +23,26 @@ class UserController
         $users = User::all('permission_id', 'ASC');
         $groupedUsers = [];
 
+
         foreach ($users as $user) {
             $permission = $user->getPermissionLevel();
-            if($permission->level !== User::USER_SUPERADMIN) {
+            $loggedInUser = User::getLoggedIn();
+            if ($loggedInUser->getPermissionLevel()->level === User::USER_SUPPORT && $permission->level === User::USER_NORMAL) {
+                $groupedUsers[$permission->name][] = $user;
+
+            } elseif ($loggedInUser->getPermissionLevel()->level === User::USER_SUPERADMIN && $permission->level !== User::USER_SUPERADMIN) {
                 $groupedUsers[$permission->name][] = $user;
             }
         }
 
-
         View::render('admin/users', [
-            'users' => $users,
             'groupedUsers' => $groupedUsers
         ], 'admin');
     }
 
+    /**
+     * @param int $id
+     */
     public function updateForm(int $id)
     {
         $user = User::find($id);
@@ -45,7 +51,6 @@ class UserController
         foreach (Permission::all() as $permission) {
             if ($permission->level !== User::USER_SUPERADMIN) {
                 $permissions[$permission->id] = $permission->name;
-
             }
         }
 
@@ -55,7 +60,11 @@ class UserController
         ], 'admin');
     }
 
-    public function doUpdate(int $id) {
+    /**
+     * @param int $id
+     */
+    public function doUpdate(int $id)
+    {
         $user = User::find($id);
 
         $errors = $this->validateAndGetErrors();
@@ -67,8 +76,8 @@ class UserController
         }
 
         $hasNewPassword = false;
-        if(!empty($_POST['newPassword']) || !empty($_POST['oldPassword'])) {
-            if($user->checkPassword($_POST['oldPassword'])) {
+        if (!empty($_POST['newPassword']) || !empty($_POST['oldPassword'])) {
+            if ($user->checkPassword($_POST['oldPassword'])) {
                 $validator = new Validator();
                 $validator->validate($_POST['newPassword'], 'Neues Passwort', true, 'password');
                 $validator->compare([$_POST['newPassword'], 'Neues Passwort'], [$_POST['newPasswordRepeat'], 'Neues Passwort wiederholen']);
@@ -94,7 +103,7 @@ class UserController
             $user->setPassword($_POST['newPassword']);
         }
 
-        if($user->save()) {
+        if ($user->save()) {
             Session::set('success', ['Benutzer wurde erfolgreich gespeichert.']);
             Router::redirectTo("admin/benutzer/edit/{$user->id}");
         }
@@ -143,10 +152,14 @@ class UserController
         }
     }
 
-    public function doDelete(int $id) {
+    /**
+     * @param int $id
+     */
+    public function doDelete(int $id)
+    {
         $user = User::find($id);
 
-        if ($user->getPermissionLevel()->level ===  User::USER_SUPERADMIN) {
+        if ($user->getPermissionLevel()->level === User::USER_SUPERADMIN) {
             Session::set('errors', ['Der Superuser kann nicht gelöscht werden.']);
             Router::redirectToReferer();
         } else {
@@ -174,7 +187,8 @@ class UserController
         return $validator->getErrors();
     }
 
-    public function newsletterRecipients() {
+    public function newsletterRecipients()
+    {
         $recipients = User::allNewsletterRecipients();
 
         View::render('admin/newsletter', [
@@ -182,7 +196,8 @@ class UserController
         ], 'admin');
     }
 
-    public function generateRecipientsCsv() {
+    public function generateRecipientsCsv()
+    {
         $recipients = User::allNewsletterRecipients();
         $timestamp = time();
 
@@ -200,7 +215,6 @@ class UserController
 
             fputcsv($csv, $cleanRecipient);
         }
-
 
 
         fclose($csv);

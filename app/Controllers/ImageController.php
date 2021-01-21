@@ -10,6 +10,10 @@ use Core\Config;
 use Core\Router;
 use Core\Session;
 
+/**
+ * Class ImageController
+ * @package App\Controllers
+ */
 class ImageController
 {
 

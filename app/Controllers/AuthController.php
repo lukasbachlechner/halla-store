@@ -10,6 +10,10 @@ use Core\Session;
 use Core\Validator;
 use Core\View;
 
+/**
+ * Class AuthController
+ * @package App\Controllers
+ */
 class AuthController
 {
     public function loginForm()

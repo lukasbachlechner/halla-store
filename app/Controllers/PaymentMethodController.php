@@ -11,6 +11,10 @@ use Core\Session;
 use Core\Validator;
 use Core\View;
 
+/**
+ * Class PaymentMethodController
+ * @package App\Controllers
+ */
 class PaymentMethodController
 {
 
@@ -26,6 +30,9 @@ class PaymentMethodController
         View::render('admin/payment-method-create', [], 'admin');
     }
 
+    /**
+     * @param int $id
+     */
     public function updateForm(int $id) {
         $paymentMethod = PaymentMethod::find($id);
         View::render('admin/payment-method-update', [
@@ -52,6 +59,9 @@ class PaymentMethodController
         }
     }
 
+    /**
+     * @param int $id
+     */
     public function doUpdate(int $id) {
         $errors = $this->validateAndGetErrors();
         if (!empty($errors)) {
@@ -70,6 +80,9 @@ class PaymentMethodController
         }
     }
 
+    /**
+     * @param int $id
+     */
     public function doDelete(int $id) {
         $paymentMethod = PaymentMethod::find($id);
         $paymentMethod->delete();

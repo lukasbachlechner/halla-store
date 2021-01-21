@@ -276,6 +276,9 @@ class Router
         exit;
     }
 
+    /**
+     * @param string $error
+     */
     public static function errorPage(string $error = '404')
     {
         /**

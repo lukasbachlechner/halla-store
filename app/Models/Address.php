@@ -9,6 +9,10 @@ use Core\Models\BaseModel;
 use Core\Router;
 use Core\View;
 
+/**
+ * Class Address
+ * @package App\Models
+ */
 class Address extends BaseModel
 {
 
@@ -56,6 +60,9 @@ class Address extends BaseModel
         }
     }
 
+    /**
+     * @return array|bool|mixed|void
+     */
     public function save()
     {
         parent::save();
@@ -118,6 +125,10 @@ class Address extends BaseModel
 
     }
 
+    /**
+     * @param int $userId
+     * @return array
+     */
     public static function findByUserId(int $userId)
     {
         $db = new Database();
@@ -135,6 +146,9 @@ class Address extends BaseModel
         return $objects;
     }
 
+    /**
+     * @return string
+     */
     public function getFormatted()
     {
         $country = $this->getCountryName();
@@ -145,12 +159,18 @@ class Address extends BaseModel
         <p>{$country}</p>";
     }
 
+    /**
+     * @return string
+     */
     public function getShortName()
     {
         $name = $this->getShortenedName();
         return "$name, {$this->street}, {$this->zip} {$this->city}";
     }
 
+    /**
+     * @return mixed
+     */
     public function getCountryName()
     {
         $countryArray = StaticData::getCountryFromAlpha2($this->country);
@@ -158,6 +178,9 @@ class Address extends BaseModel
         return $country['name'];
     }
 
+    /**
+     * @return string
+     */
     public function getShortenedName() {
         $firstLetter = substr($this->first_name, 0, 1) . ".";
         return "$firstLetter {$this->last_name}";

@@ -9,6 +9,10 @@ use Core\Router;
 use Core\Session;
 use Core\View;
 
+/**
+ * Class WishlistController
+ * @package App\Controllers
+ */
 class WishlistController
 {
     const WISHLIST_SESSION_KEY = 'wishlist';
@@ -31,6 +35,9 @@ class WishlistController
         ]);
     }
 
+    /**
+     * @param int $productId
+     */
     public function doAdd(int $productId)
     {
 
@@ -45,6 +52,10 @@ class WishlistController
         Router::redirectTo("produkte/{$product->slug}");
     }
 
+    /**
+     * @param int $productId
+     * @param string $redirect
+     */
     public function doDelete(int $productId, string $redirect = 'wunschliste')
     {
         $wishlist = Session::get(self::WISHLIST_SESSION_KEY, []);
@@ -55,6 +66,9 @@ class WishlistController
         Router::redirectTo($redirect);
     }
 
+    /**
+     * @param int $productId
+     */
     public function doDeleteFromProductPage(int $productId) {
         $product = Product::find($productId);
         $redirect = "produkte/" . $product->slug;

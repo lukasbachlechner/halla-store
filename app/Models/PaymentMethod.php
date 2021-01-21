@@ -8,6 +8,10 @@ use Core\Models\BaseModel;
 use Core\Router;
 use Core\View;
 
+/**
+ * Class PaymentMethod
+ * @package App\Models
+ */
 class PaymentMethod extends BaseModel
 {
 
@@ -40,6 +44,9 @@ class PaymentMethod extends BaseModel
         $this->is_active = (int)$data['is_active'];
     }
 
+    /**
+     * @return array|bool|mixed|void
+     */
     public function save()
     {
         parent::save();
@@ -73,6 +80,10 @@ class PaymentMethod extends BaseModel
 
     }
 
+    /**
+     * @param int $id
+     * @return PaymentMethod|false
+     */
     public static function find (int $id)
     {
         $db = new Database();
@@ -86,6 +97,9 @@ class PaymentMethod extends BaseModel
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function getFormatted() {
         $formattedPrice = $this->price > 0 ? "(". Product::formatPrice($this->price) . ")" : '';
         return "

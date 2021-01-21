@@ -9,6 +9,10 @@ use Core\Models\BaseModel;
 use Core\Router;
 use Core\View;
 
+/**
+ * Class Permission
+ * @package App\Models
+ */
 class Permission extends BaseModel
 {
 

@@ -5,6 +5,10 @@ namespace App\Models;
 use Core\Database;
 use Core\Models\BaseModel;
 
+/**
+ * Class Order
+ * @package App\Models
+ */
 class Order extends BaseModel
 {
 
@@ -72,6 +76,9 @@ class Order extends BaseModel
 
     }
 
+    /**
+     * @return array|bool|mixed|void
+     */
     public function save()
     {
         parent::save();
@@ -142,6 +149,28 @@ class Order extends BaseModel
 
     }
 
+    /**
+     * @param $userId
+     * @return array
+     */
+    public static function allByUserId($userId)
+    {
+        $db = new Database();
+        $result = $db->query("SELECT * FROM orders WHERE user_id = ?", [
+            'i:id' => $userId
+        ]);
+
+        $objects = [];
+        foreach ($result as $object) {
+            $objects[] = new self($object);
+        }
+
+        return $objects;
+    }
+
+    /**
+     * @return false|mixed
+     */
     public function getRecipient()
     {
         if ($this->user_id) {
@@ -151,6 +180,9 @@ class Order extends BaseModel
         }
     }
 
+    /**
+     * @return string
+     */
     public function getOrderBadge()
     {
         if (array_key_exists($this->order_state, self::ORDER_STATES)) {
@@ -169,6 +201,9 @@ class Order extends BaseModel
         }
     }
 
+    /**
+     * @return string
+     */
     public function getPaymentBadge()
     {
         if (array_key_exists($this->payment_state, self::PAYMENT_STATES)) {
@@ -180,6 +215,9 @@ class Order extends BaseModel
         }
     }
 
+    /**
+     * @return string
+     */
     public function getOrderBorder()
     {
         if (array_key_exists($this->order_state, self::ORDER_STATES)) {
@@ -195,7 +233,12 @@ class Order extends BaseModel
         }
     }
 
-    public function getFormattedDate(bool $createdDate = true)
+    /**
+     * @param bool $createdDate
+     * @param bool $noTime
+     * @return string
+     */
+    public function getFormattedDate(bool $createdDate = true, bool $noTime = false)
     {
         if ($createdDate) {
             $date = $this->created_at;
@@ -204,6 +247,24 @@ class Order extends BaseModel
         }
 
         $timestamp = strtotime($date);
-        return strftime("%d.%m.%y %H:%M:%S", $timestamp);
+
+        if ($noTime) {
+            return strftime("%d.%m.%y", $timestamp);
+        } else {
+            return strftime("%d.%m.%y %H:%M:%S", $timestamp);
+        }
+    }
+
+    /**
+     * @param string $year
+     * @return array|bool|mixed
+     */
+    public static function getMonthlyRevenue(string $year) {
+        $db = new Database();
+        $result = $db->query("SELECT SUM(total) as sum, YEAR(created_at) as year, MONTH(created_at) as month FROM orders WHERE YEAR(created_at) = ? GROUP BY YEAR(created_at), MONTH(created_at)", [
+            's:year' => $year
+        ]);
+
+        return $result;
     }
 }

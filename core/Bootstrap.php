@@ -23,9 +23,8 @@ class Bootstrap
         Session::init();
         $this->updateSessionLifetime();
 
-        ini_set('display_errors', 1);
-        ini_set('display_startup_errors', 1);
-        error_reporting(E_ALL);
+
+        setlocale(LC_ALL, 'de_AT.utf8');
 
 
         /**
@@ -100,7 +99,7 @@ class Bootstrap
         ) {
             Session::set(BaseUser::LOGGED_IN_REMEMBER, time() + BaseUser::LOGGED_IN_SESSION_LIFETIME);
         } else {
-            // User::logout();
+            User::logout();
         }
     }
 

@@ -9,6 +9,10 @@ use Core\Router;
 use Core\Session;
 use Core\Traits\SoftDelete;
 
+/**
+ * Class User
+ * @package App\Models
+ */
 class User extends BaseUser
 {
 
@@ -64,6 +68,9 @@ class User extends BaseUser
         $this->newsletter = (string)$data['newsletter'];
     }
 
+    /**
+     * @return array
+     */
     public static function allNewsletterRecipients()
     {
         $db = new Database();
@@ -79,6 +86,9 @@ class User extends BaseUser
     }
 
 
+    /**
+     * @return array|bool|mixed|void
+     */
     public function save()
     {
         parent::save();
@@ -186,6 +196,9 @@ class User extends BaseUser
         return true;
     }
 
+    /**
+     * @return Permission|false
+     */
     public function getPermissionLevel()
     {
         $db = new Database();
@@ -201,6 +214,9 @@ class User extends BaseUser
         return false;
     }
 
+    /**
+     * @return string
+     */
     public function getFullName()
     {
         return "$this->first_name $this->last_name";

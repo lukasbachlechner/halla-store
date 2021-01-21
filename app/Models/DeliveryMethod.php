@@ -8,6 +8,10 @@ use Core\Models\BaseModel;
 use Core\Router;
 use Core\View;
 
+/**
+ * Class DeliveryMethod
+ * @package App\Models
+ */
 class DeliveryMethod extends BaseModel
 {
 
@@ -39,6 +43,9 @@ class DeliveryMethod extends BaseModel
         $this->is_active = (int)$data['is_active'];
     }
 
+    /**
+     * @return array|bool|mixed|void
+     */
     public function save()
     {
         parent::save();
@@ -72,6 +79,9 @@ class DeliveryMethod extends BaseModel
 
     }
 
+    /**
+     * @return string
+     */
     public function getFormatted() {
         $formattedPrice = Product::formatPrice($this->price);
         return "

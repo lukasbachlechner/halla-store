@@ -8,6 +8,10 @@ use Core\Models\BaseModel;
 use Core\Router;
 use Core\View;
 
+/**
+ * Class Product
+ * @package App\Models
+ */
 class Product extends BaseModel
 {
 
@@ -54,6 +58,10 @@ class Product extends BaseModel
         $this->tax_rate = (int)$data['tax_rate'];
     }
 
+    /**
+     * @param string $slug
+     * @return Product
+     */
     public static function findBySlug(string $slug)
     {
         $result = self::findAllBySlug($slug);
@@ -65,6 +73,10 @@ class Product extends BaseModel
         }
     }
 
+    /**
+     * @param string $slug
+     * @return array|bool|mixed
+     */
     public static function findAllBySlug(string $slug) {
         $db = new Database();
         $tableName = self::getTableNameFromClassName();
@@ -72,6 +84,9 @@ class Product extends BaseModel
         return $db->query("SELECT * FROM $tableName WHERE slug = ?", ['s:slug' => $slug]);
     }
 
+    /**
+     * @return false|string
+     */
     public function generateSlug()
     {
         // Alles in Lowercase
@@ -104,6 +119,9 @@ class Product extends BaseModel
 
     }
 
+    /**
+     * @return array|bool|mixed|void
+     */
     public function save()
     {
         parent::save();
@@ -147,6 +165,9 @@ class Product extends BaseModel
 
     }
 
+    /**
+     * @param string $imagesToDelete
+     */
     public function disconnectAndDeleteImages(string $imagesToDelete = '')
     {
 
@@ -220,6 +241,11 @@ class Product extends BaseModel
         }
 
         return $images;
+    }
+
+    public function getThumbnail() {
+        $image = $this->getImages(true)[0];
+        return $image->path;
     }
 
     public static function all(string $orderbBy = '', string $direction = 'ASC'): array

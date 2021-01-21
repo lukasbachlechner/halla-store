@@ -10,6 +10,10 @@ use Core\Session;
 use Core\Validator;
 use Core\View;
 
+/**
+ * Class DeliveryMethodController
+ * @package App\Controllers
+ */
 class DeliveryMethodController
 {
 
@@ -25,6 +29,9 @@ class DeliveryMethodController
         View::render('admin/delivery-method-create', [], 'admin');
     }
 
+    /**
+     * @param int $id
+     */
     public function updateForm(int $id) {
         $deliveryMethod = DeliveryMethod::find($id);
         View::render('admin/delivery-method-update', [
@@ -51,6 +58,9 @@ class DeliveryMethodController
         }
     }
 
+    /**
+     * @param int $id
+     */
     public function doUpdate(int $id) {
         $errors = $this->validateAndGetErrors();
         if (!empty($errors)) {
@@ -69,6 +79,9 @@ class DeliveryMethodController
         }
     }
 
+    /**
+     * @param int $id
+     */
     public function doDelete(int $id) {
         $deliveryMethod = DeliveryMethod::find($id);
         $deliveryMethod->delete();

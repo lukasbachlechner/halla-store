@@ -4,6 +4,10 @@
 namespace Core;
 
 
+/**
+ * Class Form
+ * @package Core
+ */
 class Form
 {
 
@@ -93,6 +97,10 @@ class Form
         return isset($additionalOptions[$value]) && strlen($additionalOptions[$value]) > 0;
     }
 
+    /**
+     * @param string $name
+     * @param array $values
+     */
     public static function renderRadioGroup(string $name, array $values)
     {
         foreach ($values as $key => $value) {

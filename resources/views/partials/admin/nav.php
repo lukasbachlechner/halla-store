@@ -1,23 +1,25 @@
 <?php
 $links = [
-    ['link' => 'dashboard', 'title' => 'Dashboard', 'icon' => 'dashboard'],
-    ['link' => 'bestellungen', 'title' => 'Bestellungen', 'icon' => 'inbox'],
-    ['link' => 'produkte', 'title' => 'Produkte', 'icon' => 'products'],
-    ['link' => 'benutzer', 'title' => 'Benutzer', 'icon' => 'people'],
-    ['link' => 'newsletter', 'title' => 'Newsletter', 'icon' => 'newsletter'],
-    ['link' => 'versand', 'title' => 'Versandmethoden', 'icon' => 'delivery'],
-    ['link' => 'zahlungsart', 'title' => 'Zahlungsarten', 'icon' => 'credit-card']
+    ['link' => 'dashboard', 'title' => 'Dashboard', 'icon' => 'dashboard', 'permission' => [20,30,40]],
+    ['link' => 'bestellungen', 'title' => 'Bestellungen', 'icon' => 'inbox', 'permission' => [20,30,40]],
+    ['link' => 'produkte', 'title' => 'Produkte', 'icon' => 'products', 'permission' => [20,30]],
+    ['link' => 'benutzer', 'title' => 'Benutzer', 'icon' => 'people', 'permission' => [40]],
+    ['link' => 'newsletter', 'title' => 'Newsletter', 'icon' => 'newsletter', 'permission' => [20]],
+    ['link' => 'versand', 'title' => 'Versandmethoden', 'icon' => 'delivery', 'permission' => []],
+    ['link' => 'zahlungsart', 'title' => 'Zahlungsarten', 'icon' => 'credit-card', 'permission' => []]
 ];
 ?>
 
 <nav class="nav">
     <ul class="nav__list">
         <?php foreach ($links as $link): ?>
-            <li class="nav__item <?php \Core\View::renderActiveClass("admin/${link['link']}", 'nav__item--active'); ?>">
-                <a href="admin/<?php echo $link['link']; ?>" class="nav__link">
-                    <?php echo \Core\View::getIcon($link['icon']); ?>
-                    <span><?php echo $link['title']; ?></a></span>
-            </li>
+            <?php if (\App\Models\User::hasPermission($link['permission'])): ?>
+                <li class="nav__item <?php \Core\View::renderActiveClass("admin/${link['link']}", 'nav__item--active'); ?>">
+                    <a href="admin/<?php echo $link['link']; ?>" class="nav__link">
+                        <?php echo \Core\View::getIcon($link['icon']); ?>
+                        <span><?php echo $link['title']; ?></a></span>
+                </li>
+            <?php endif; ?>
         <?php endforeach; ?>
     </ul>
 

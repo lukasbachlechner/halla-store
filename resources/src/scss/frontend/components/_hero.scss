@@ -1,0 +1,51 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.hero {
+  display: grid;
+  align-items: center;
+  grid-auto-flow: revert;
+  grid-gap: 2rem;
+  margin-top: 2rem;
+
+  @include media-up(md) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  & h1 {
+    @include fluid-type(48, 96);
+    line-height: 1.1;
+  }
+
+  &__img-wrapper {
+    height: 50vh;
+    width: 100%;
+
+    @include media-up(md) {
+      height: 80vh;
+    }
+
+    & > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    & p {
+      @include fluid-type(16, 24);
+      margin-bottom: 1.5rem;
+      @include media-up(md) {
+        width: 75%;
+      }
+    }
+
+  }
+}

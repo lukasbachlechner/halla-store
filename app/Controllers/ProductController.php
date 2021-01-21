@@ -9,6 +9,10 @@ use Core\Session;
 use Core\Validator;
 use Core\View;
 
+/**
+ * Class ProductController
+ * @package App\Controllers
+ */
 class ProductController
 {
     private ImageController $imageController;
@@ -18,6 +22,9 @@ class ProductController
         $this->imageController = new ImageController();
     }
 
+    /**
+     * @param string $slug
+     */
     public function show(string $slug)
     {
         $product = Product::findBySlug($slug);
@@ -40,6 +47,9 @@ class ProductController
         View::render('admin/product-create', [], 'admin');
     }
 
+    /**
+     * @param int $id
+     */
     public function updateForm(int $id)
     {
         $product = Product::find($id);
@@ -76,6 +86,9 @@ class ProductController
         }
     }
 
+    /**
+     * @param int $id
+     */
     public function doUpdate(int $id)
     {
         $errors = $this->validateAndGetErrors();
@@ -102,6 +115,9 @@ class ProductController
 
     }
 
+    /**
+     * @param int $productId
+     */
     public function doDelete(int $productId) {
         // delete images
         $product = Product::find($productId);

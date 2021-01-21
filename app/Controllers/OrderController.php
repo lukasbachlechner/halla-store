@@ -18,6 +18,10 @@ use Stripe\Customer;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Stripe;
 
+/**
+ * Class OrderController
+ * @package App\Controllers
+ */
 class OrderController
 {
     public function checkoutLogin()
@@ -86,6 +90,9 @@ class OrderController
         ], 'admin');
     }
 
+    /**
+     * @param int $id
+     */
     public function updateForm(int $id)
     {
         $order = Order::find($id);
@@ -140,6 +147,9 @@ class OrderController
         ]);
     }
 
+    /**
+     * @param int $id
+     */
     public function doUpdate(int $id) {
         $validator = new Validator();
         $validator->validate($_POST['trackingNumber'], 'Sendungsnummer', false, 'textnum');
@@ -314,6 +324,14 @@ class OrderController
         $paymentMethodId = $paymentMethod !== 'stripe' ? $paymentMethod->id : 0;
         $grandTotal = $total + $paymentMethodPrice + $deliveryMethod->price;
 
+        foreach ($products as $product) {
+            $product->quantity_sold += $product->quantity;
+            if($product->quantity_available >= $product->quantity) {
+                $product->quantity_available -= $product->quantity;
+            }
+
+            $product->save();
+        }
         $order = new Order();
         $order->delivery_address_id = $shippingAddress->id;
         $order->billing_address_id = $billingAddress->id;
@@ -345,6 +363,14 @@ class OrderController
         }
     }
 
+    /**
+     * @param string $stripeToken
+     * @param int $orderId
+     * @param float $amount
+     * @param string $email
+     * @return Charge
+     * @throws ApiErrorException
+     */
     private static function dispatchStripePayment(string $stripeToken, int $orderId, float $amount, string $email)
     {
         Stripe::setApiKey('sk_test_51IAyCqLekmfDkPLhqKBvXyw4gFjSz20qiUxGk2U5Jw6i68C1mjgm7ROUQhzgoVq9RQr27KHR1pfmUTdpuOFzguKy00GqN0LwtP');

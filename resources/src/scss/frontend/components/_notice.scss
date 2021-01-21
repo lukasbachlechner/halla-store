@@ -1,0 +1,17 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.notice {
+  &__wrapper {
+    position: fixed;
+    left: 3rem;
+    right: 3rem;
+    bottom: 1rem;
+    z-index: 200;
+
+    & > * {
+      margin-bottom: 1rem;
+    }
+  }
+}
