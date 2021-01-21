@@ -84,7 +84,7 @@ class Router
         if (strpos($path, '/admin') === 0) {
             // it is a admin route, so check if the User is logged in & has sufficient rights
             // if not, throw 403
-            if (!User::isLoggedIn() || User::getLoggedIn()->permission_level === 1) {
+            if (!User::isLoggedIn() || User::getLoggedIn()->getPermissionLevel()->level === 1) {
                 Router::errorPage('403');
             }
         }

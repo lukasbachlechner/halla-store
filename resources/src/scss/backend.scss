@@ -16,5 +16,6 @@
 @use "backend/components/notification";
 @use "backend/components/drop-zone";
 @use "backend/components/badge";
+@use "backend/components/orders";
 @use "backend/components/form" as overwriteForm;
 @use "backend/components/logo" as overwriteLogo;

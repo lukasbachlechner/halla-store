@@ -7,9 +7,12 @@ use Core\Models\BaseModel;
 use Core\Models\BaseUser;
 use Core\Router;
 use Core\Session;
+use Core\Traits\SoftDelete;
 
 class User extends BaseUser
 {
+
+    use SoftDelete;
 
     public int $id;
     public string $first_name;
@@ -17,8 +20,8 @@ class User extends BaseUser
     public string $email;
     public string $password;
     public int $permission_id = 1;
-    public int $permission_level = 1;
     public int $newsletter = 0;
+    public string $datetime_registered;
 
     /**
      * User-Levels:
@@ -57,7 +60,22 @@ class User extends BaseUser
         $this->email = (string)$data['email'];
         $this->password = (string)$data['password'];
         $this->permission_id = (int)$data['permission_id'];
-        $this->permission_level = $this->getPermissionLevel($this->permission_id);
+        $this->datetime_registered = (string)$data['datetime_registered'];
+        $this->newsletter = (string)$data['newsletter'];
+    }
+
+    public static function allNewsletterRecipients()
+    {
+        $db = new Database();
+        $result = $db->query("SELECT * FROM users WHERE newsletter = 1 AND deleted_at IS NULL");
+
+        $objects = [];
+
+        foreach ($result as $object) {
+            $objects[] = new self($object);
+        }
+
+        return $objects;
     }
 
 
@@ -68,14 +86,16 @@ class User extends BaseUser
         $db = new Database();
 
         $tableName = self::getTableNameFromClassName();
-
-        $timestamp = time();
-
-        if (!empty($id)) {
-            /**
-             * @todo: update user and return $result
-             */
-            $result = $db->query();
+        if (!empty($this->id)) {
+            $result = $db->query("UPDATE $tableName SET email = ?, first_name = ?, last_name = ?, password = ?, permission_id = ?, newsletter = ? WHERE id = ?", [
+                's:email' => $this->email,
+                's:first_name' => $this->first_name,
+                's:last_name' => $this->last_name,
+                's:password' => $this->password,
+                'i:permission_id' => $this->permission_id,
+                'i:newsletter' => $this->newsletter,
+                'i:id' => $this->id,
+            ]);
         } else {
             /**
              * @todo: create user, set $this->id and return $result
@@ -127,7 +147,7 @@ class User extends BaseUser
         /**
          * Query ausführen.
          */
-        $result = $db->query("SELECT * FROM $tableName WHERE email = ? LIMIT 1", [
+        $result = $db->query("SELECT * FROM $tableName WHERE email = ? AND deleted_at IS NULL LIMIT 1", [
             's:email' => $email,
         ]);
 
@@ -166,33 +186,41 @@ class User extends BaseUser
         return true;
     }
 
-    private function getPermissionLevel(int $permission_id)
+    public function getPermissionLevel()
     {
-        /**
-         * Datenbankverbindung herstellen.
-         */
         $db = new Database();
 
-
-        /**
-         * Query ausführen.
-         */
         $result = $db->query("SELECT * FROM permissions WHERE id = ? LIMIT 1", [
-            'i:permission_id' => $permission_id,
+            'i:permission_id' => $this->permission_id,
         ]);
 
         if (!empty($result)) {
-            return $result[0]['level'];
+            return new Permission($result[0]);
         }
 
-        /**
-         * Es wurde kein Datensatz gefunden.
-         */
         return false;
     }
 
-    public function getFullName() {
+    public function getFullName()
+    {
         return "$this->first_name $this->last_name";
+    }
+
+    public static function hasPermission(array $allowedLevels = []): bool
+    {
+        $allowedLevels[] = self::USER_SUPERADMIN;
+        if (self::isLoggedIn()) {
+            $selfUser = Permission::find(self::getLoggedIn()->permission_id);
+            return in_array($selfUser->level, $allowedLevels);
+        } else {
+            return false;
+        }
+
+    }
+
+    public static function isAdmin(): bool
+    {
+        return self::hasPermission([self::USER_SALES, self::USER_PROCUREMENT, self::USER_SUPPORT]);
     }
 }
 

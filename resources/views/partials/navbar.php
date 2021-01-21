@@ -47,14 +47,7 @@
                     <?php
                         $profileLink = 'login';
                         if(\App\Models\User::isLoggedIn()) {
-                            $loggedInUser = \App\Models\User::getLoggedIn();
-                            $permissionLevel =  $loggedInUser->permission_level;
-
-                            if($permissionLevel !== \App\Models\User::USER_NORMAL) {
-                                $profileLink = 'admin';
-                            } else {
                                 $profileLink = 'profil';
-                            }
                         }
 
                     ?>
@@ -66,6 +59,17 @@
                     </a>
                     <?php \Core\View::renderPartial('micro-login'); ?>
                 </li>
+
+                <?php if (\App\Models\User::isAdmin()): ?>
+                    <li class="nav__item">
+                        <a class="nav__link" href="admin">
+                            <div class="nav__icon-wrapper">
+                                <?php echo \Core\View::getIcon('dashboard'); ?>
+                            </div>
+                            <span class="sr-only">Warenkorb</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
 
                 <li class="nav__item nav__menu-trigger">
                     <button class="nav__link" id="menuTrigger">

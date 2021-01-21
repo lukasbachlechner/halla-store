@@ -41,9 +41,6 @@ class AuthController
             $redirectTo = !empty($requestedPath) ? $requestedPath : '/';
             $user->login($redirectTo, $remember);
         } else {
-            /**
-             * @todo: save errror
-             */
             Session::set('errors', ['E-Mail-Adresse oder Passwort ist falsch. Bitte versuch es noch einmal.']);
             Router::redirectTo('login');
         }

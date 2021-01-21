@@ -1,0 +1,35 @@
+@use '../../shared/variables' as *;
+@use '../../shared/mixins' as *;
+@use 'sass:map';
+
+.orders {
+  &__products {
+    display: grid;
+    grid-gap: 1rem;
+
+    &-item {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      padding: 1rem;
+
+      & + &:not(&--last) {
+        border-top: 1px solid map.get($colors-light, background-dark);
+        @include dark-mode {
+          border-top: 1px solid map.get($colors-dark, background);
+        }
+      }
+
+
+      &--last {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        grid-gap: 1rem;
+        font-weight: bold;
+        border-bottom: none;
+        padding: 0 1rem;
+        text-align: right;
+      }
+    }
+  }
+}

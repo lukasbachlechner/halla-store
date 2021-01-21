@@ -2,12 +2,14 @@
 
 use App\Controllers\DeliveryMethodController;
 use App\Controllers\HomeController;
+use App\Controllers\ImageController;
 use App\Controllers\PaymentMethodController;
 use App\Controllers\ProductController;
 use App\Controllers\SiteController;
 use App\Controllers\AuthController;
 use App\Controllers\AdminController;
 use App\Controllers\CartController;
+use App\Controllers\UserController;
 use App\Controllers\WishlistController;
 use App\Controllers\OrderController;
 use App\Controllers\AddressController;
@@ -38,6 +40,8 @@ return [
     '/admin/dashboard' => [AdminController::class, 'dashboard'],
 
     '/admin/bestellungen' => [OrderController::class, 'showAll'],
+    '/admin/bestellungen/edit/{id}' => [OrderController::class, 'updateForm'],
+    '/admin/bestellungen/edit/{id}/do' => [OrderController::class, 'doUpdate'],
 
     '/admin/produkte' => [ProductController::class, 'showAll'],
     '/admin/produkte/add' => [ProductController::class, 'createForm'],
@@ -59,6 +63,16 @@ return [
     '/admin/zahlungsart/edit/{id}' => [PaymentMethodController::class, 'updateForm'],
     '/admin/zahlungsart/edit/{id}/do' => [PaymentMethodController::class, 'doUpdate'],
     '/admin/zahlungsart/delete/{id}/do' => [PaymentMethodController::class, 'doDelete'],
+
+    '/admin/benutzer' => [UserController::class, 'showAll'],
+    '/admin/benutzer/add' => [UserController::class, 'createForm'],
+    '/admin/benutzer/add/do' => [UserController::class, 'doCreate'],
+    '/admin/benutzer/edit/{id}' => [UserController::class, 'updateForm'],
+    '/admin/benutzer/edit/{id}/do' => [UserController::class, 'doUpdate'],
+    '/admin/benutzer/delete/{id}/do' => [UserController::class, 'doDelete'],
+
+    '/admin/newsletter' => [UserController::class, 'newsletterRecipients'],
+    '/admin/newsletter/csv' => [UserController::class, 'generateRecipientsCsv'],
 
     /**
      * Product-Routes
@@ -108,5 +122,6 @@ return [
      * Fehlerseiten-Routes
      */
     '/not-found' => [SiteController::class, 'error404'],
-    '/forbidden' => [SiteController::class, 'error403']
+    '/forbidden' => [SiteController::class, 'error403'],
+
 ];

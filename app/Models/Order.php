@@ -22,8 +22,18 @@ class Order extends BaseModel
     public string $created_at;
     public string $updated_at;
 
-    const PAYMENT_STATES = ['open', 'paid'];
-    const ORDER_STATES = ['created', 'in_progress', 'shipped'];
+    const PAYMENT_STATES = [
+        'open' => 'Offen',
+        'paid' => 'Bezahlt',
+        'refunded' => 'Storniert'
+    ];
+
+    const ORDER_STATES = [
+        'created' => 'Neu',
+        'in_progress' => 'Bearbeitet',
+        'shipped' => 'Verschickt',
+        'refunded' => 'Storniert'
+    ];
 
     /**
      * Product constructor.
@@ -47,8 +57,8 @@ class Order extends BaseModel
         $this->delivery_address_id = (int)$data['delivery_address_id'];
         $this->paymentmethod_id = (int)$data['paymentmethod_id'];
         $this->deliverymethod_id = (int)$data['deliverymethod_id'];
-        $this->payment_state = (int)$data['payment_state'];
-        $this->order_state = (int)$data['order_state'];
+        $this->payment_state = (string)$data['payment_state'];
+        $this->order_state = (string)$data['order_state'];
         $this->total = (float)$data['total'];
         $this->tracking_number = (string)$data['tracking_number'];
         $this->created_at = (string)$data['created_at'];
@@ -130,5 +140,70 @@ class Order extends BaseModel
 
         return $result;
 
+    }
+
+    public function getRecipient()
+    {
+        if ($this->user_id) {
+            return User::find($this->user_id);
+        } else {
+            return false;
+        }
+    }
+
+    public function getOrderBadge()
+    {
+        if (array_key_exists($this->order_state, self::ORDER_STATES)) {
+            $orderStateValue = self::ORDER_STATES[$this->order_state];
+            $badgeClass = '';
+
+            if ($this->order_state === 'created') {
+                $badgeClass = 'badge--primary';
+            } elseif ($this->order_state === 'in_progress') {
+                $badgeClass = 'badge--warning';
+            } elseif ($this->order_state === 'refunded') {
+                $badgeClass = 'badge--error';
+            }
+
+            return "<span class='badge $badgeClass'>$orderStateValue</span>";
+        }
+    }
+
+    public function getPaymentBadge()
+    {
+        if (array_key_exists($this->payment_state, self::PAYMENT_STATES)) {
+            $paymentStateValue = self::PAYMENT_STATES[$this->payment_state];
+
+            $badgeClass = $this->payment_state === 'open' ? 'badge--error' : '';
+
+            return "<span class='badge $badgeClass'>$paymentStateValue</span>";
+        }
+    }
+
+    public function getOrderBorder()
+    {
+        if (array_key_exists($this->order_state, self::ORDER_STATES)) {
+            if ($this->order_state === 'created') {
+                return 'list__item--primary';
+            } elseif ($this->order_state === 'in_progress') {
+                return 'list__item--warning';
+            } elseif ($this->order_state === 'refunded') {
+                return 'list__item--error';
+            } else {
+                return 'list__item--success';
+            }
+        }
+    }
+
+    public function getFormattedDate(bool $createdDate = true)
+    {
+        if ($createdDate) {
+            $date = $this->created_at;
+        } else {
+            $date = $this->updated_at;
+        }
+
+        $timestamp = strtotime($date);
+        return strftime("%d.%m.%y %H:%M:%S", $timestamp);
     }
 }

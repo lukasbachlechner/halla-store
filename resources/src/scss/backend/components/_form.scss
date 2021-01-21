@@ -69,6 +69,22 @@
       background: map.get($colors-dark, header);
     }
 
+    & .grid {
+      display: grid;
+      grid-gap: 1rem;
+
+      @include media-up(md) {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    & h2 {
+      @include fluid-type(16, 18);
+      font-weight: 600;
+      margin-bottom: 1rem;
+
+    }
+
     & > legend {
       float: left;
       margin-bottom: 1.5rem;

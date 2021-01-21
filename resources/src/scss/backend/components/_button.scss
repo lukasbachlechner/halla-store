@@ -53,7 +53,7 @@
       left: 0;
       width: 100%;
       padding: 1rem 2rem;
-      z-index: 100;
+      z-index: 99;
       background: map.get($colors-light, white);
       @include box-shadow;
 

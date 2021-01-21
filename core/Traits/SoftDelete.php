@@ -21,6 +21,7 @@ trait SoftDelete
      */
     public function delete ()
     {
+
         /**
          * Datenbankverbindung herstellen.
          */
@@ -34,8 +35,7 @@ trait SoftDelete
         /**
          * Query ausführen.
          */
-        $result = $db->query("UPDATE $tableName SET deleted_at = ? WHERE id = ?", [
-            'i:deleted_at' => time(),
+        $result = $db->query("UPDATE $tableName SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?", [
             'i:id' => $this->id
         ]);
 

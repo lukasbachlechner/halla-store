@@ -73,6 +73,19 @@ class PaymentMethod extends BaseModel
 
     }
 
+    public static function find (int $id)
+    {
+        $db = new Database();
+
+        $result = $db->query("SELECT * FROM paymentmethods WHERE id = ?", ['i:id' => $id]);
+
+        if (!empty($result)) {
+            return new self($result[0]);
+        }
+
+        return false;
+    }
+
     public function getFormatted() {
         $formattedPrice = $this->price > 0 ? "(". Product::formatPrice($this->price) . ")" : '';
         return "

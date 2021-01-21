@@ -27,6 +27,12 @@ h1 {
   font-weight: 700;
 }
 
+h2 {
+  @include fluid-type(18, 20);
+  font-weight: 700;
+  margin: 2rem 0 1rem;
+}
+
 p, a, span, .font--paragraph {
   font-size: 1rem;
   line-height: 1.4;

@@ -24,4 +24,16 @@
       background: map.get($ui-colors, error);
     }
   }
+
+  &--warning {
+    &::before {
+      background: map.get($ui-colors, warning);
+    }
+  }
+
+  &--primary {
+    &::before {
+      background: map.get($ui-colors, primary);
+    }
+  }
 }

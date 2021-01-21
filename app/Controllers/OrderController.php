@@ -48,10 +48,82 @@ class OrderController
         ]);
     }
 
-    public function showAll() {
-        $orders = Order::all();
+    public function showAll()
+    {
+        $orders = Order::all('order_state', 'ASC');
+
+        foreach ($orders as $order) {
+            if ($order->user_id) {
+                $order->recipient = User::find($order->user_id);
+            } else {
+                $billingAddress = Address::find($order->billing_address_id);
+                $tempUser = new User();
+                $tempUser->first_name = $billingAddress->first_name;
+                $tempUser->last_name = $billingAddress->last_name;
+                $order->recipient = $tempUser;
+            }
+
+            $order->paymentMethod = PaymentMethod::find($order->paymentmethod_id);
+
+            if($order->paymentMethod === false) {
+                $stripePayment = new PaymentMethod();
+                $stripePayment->name = 'Kreditkarte (Stripe)';
+                $order->paymentMethod = $stripePayment;
+            }
+        }
+
+        $groupedOrders = [];
+
+        foreach ($orders as $order) {
+            $orderTerm = Order::ORDER_STATES[$order->order_state];
+            $groupedOrders[$orderTerm][] = $order;
+        }
+
+
         View::render('admin/orders', [
-            'orders' => $orders
+            'orders' => $orders,
+            'groupedOrders' => $groupedOrders
+        ], 'admin');
+    }
+
+    public function updateForm(int $id)
+    {
+        $order = Order::find($id);
+        $billingAddress = Address::find($order->billing_address_id);
+        $shippingAddress = Address::find($order->delivery_address_id);
+        $paymentMethod = PaymentMethod::find($order->paymentmethod_id);
+        $shippingMethod = DeliveryMethod::find($order->deliverymethod_id);
+
+        if($paymentMethod === false) {
+            $paymentMethod = new PaymentMethod();
+            $paymentMethod->name = 'Kreditkarte (Stripe)';
+        }
+
+        if ($order->user_id) {
+            $user = User::find($order->user_id);
+        } else {
+            $user = new User();
+            $user->first_name = 'Gastbenutzer';
+            $user->email = $billingAddress->email;
+        }
+
+        $products = [];
+
+        foreach (json_decode($order->products, true) as $product) {
+            $tempProduct = new Product($product);
+            $tempProduct->quantity = $product['quantity'];
+            $tempProduct->subtotal = $product['subtotal'];
+            $products[] = $tempProduct;
+        }
+
+        View::render('admin/order-update', [
+            'order' => $order,
+            'billingAddress' => $billingAddress,
+            'shippingAddress' => $shippingAddress,
+            'paymentMethod' => $paymentMethod,
+            'shippingMethod' => $shippingMethod,
+            'user' => $user,
+            'products' => $products
         ], 'admin');
     }
 
@@ -66,6 +138,27 @@ class OrderController
             'tax' => $tax,
             'orderToReview' => $orderToReview
         ]);
+    }
+
+    public function doUpdate(int $id) {
+        $validator = new Validator();
+        $validator->validate($_POST['trackingNumber'], 'Sendungsnummer', false, 'textnum');
+        $errors = $validator->getErrors();
+
+        if(!empty($errors)) {
+            Session::set('errors', $errors);
+            Router::redirectToReferer();
+        }
+
+        $order = Order::find($id);
+        $order->payment_state = $_POST['paymentState'];
+        $order->order_state = $_POST['orderState'];
+        $order->tracking_number = $_POST['trackingNumber'];
+
+        if($order->save()) {
+            Session::set('success', ['Bestellung erfolgreich aktualisiert.']);
+            Router::redirectToReferer();
+        }
     }
 
     public function checkoutSuccess()
@@ -197,7 +290,7 @@ class OrderController
         $billingAddress = $checkedOrder['billingAddress'];
         $shippingAddress = $checkedOrder['shippingAddress'];
 
-        if(!isset($billingAddress->id)) {
+        if (!isset($billingAddress->id)) {
             if (isset($currentUserId)) {
                 $billingAddress->user_id = $currentUserId;
             }
@@ -231,16 +324,18 @@ class OrderController
         $order->products = json_encode($products);
         $orderSuccess = $order->save();
 
-        if($checkedOrder['stripeToken']) {
-            if($currentUserEmail === null) {
+        if ($checkedOrder['stripeToken']) {
+            if ($currentUserEmail === null) {
                 $email = $billingAddress->email;
             } else {
                 $email = $currentUserEmail;
             }
             $charge = self::dispatchStripePayment($checkedOrder['stripeToken'], $order->id, $grandTotal, $email);
+            $order->payment_state = 'paid';
+            $order->save();
         }
 
-        if($orderSuccess) {
+        if ($orderSuccess) {
             Session::set('successfulOrderId', $order->id);
             Session::forget('orderToReview');
             Session::forget(CartController::CART_SESSION_KEY);
